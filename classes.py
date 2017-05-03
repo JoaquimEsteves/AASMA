@@ -2,17 +2,18 @@
 # -*- coding: utf-8 -*-
 from settings import * 
 from CustomExceptions import *
+from utils import *
 
 class Cars(object):
 
-    def __init__(self, position,destination=settings.DEFAULT_DESTINATION,worldMap=WORLDMAP):
+    def __init__(self, position,destination=DEFAULT_DESTINATION,worldMap=WORLDMAP):
         #speed: Return the speed the car is currently at
         self.speed = 0
         #position: Position of the car - ie: the patch it's on
         self.position = position
         #turn_signal_status: Return the status of it's turn signal
         self.turn_signal_status = TURN_SIG_OFF
-        #destination: Describes the patch the car wants to go to 
+        #destination: Describes the patch the car wants to go to
         self.destination = destination
         #current orientation: describes which way the car is oriented
         self.current_orientation = [1,0]
@@ -23,14 +24,16 @@ class Cars(object):
     #FIX ME
 
     #ACTUATORS
-    def drive(self,orientation=self.current_orientation):
+    def drive(self,orientation=None):
 		#Orientation should be something like
+        if orientation == None:
+            orientation = self.current_orientation
         new_pos = [self.position[0] + orientation[0] * self.speed, self.position[1] + orientation[1] * self.speed]
-        
         if not possiblePosition(new_pos):
             raise PositionError("I am a car and I'm attempting to drive to impossible position {}".format(new_pos))
         else:
             self.position = new_pos
+            #abstraction these still don't exist yet
             self.crashed = checkForCrash(new_pos,world_map)
             return self.position
     
@@ -62,12 +65,14 @@ class Cars(object):
         
     def stop(self):
         while self.speed > 0:		 
-            hitTheBreaks(self)   
+            #still doesnt exist
+            hitTheBreaks(self)
     
     def hitTheBreaks(self):
         new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
         pos = self.drive(new_orientation)
+        #still doesnt exist
         self.crashed =  checkForCrash(pos,world_map) 
     def accelerate(self):
         self.speed = self.speed + 1
@@ -92,6 +97,7 @@ class Cars(object):
         return None #FIX ME
     #run cycle
     def run(self):
+        #still doesnt exist
         self.crashed = checkForCrash(pos,world_map)
         if self.crashed == True:
             print "I HAVE CRASHED! THIS IS TERRIBLE!"
@@ -101,7 +107,7 @@ class Cars(object):
             return
         self.plan = self.planAhead()
         nextAction = self.plan[0]
-        for pl in self.plan[:3]
+        for pl in self.plan[:3]:
             if pl.startswith("TURN"):
                 #Will be either left or right
                 self.turn_signal_status = pl[5:]
@@ -114,7 +120,7 @@ class Cars(object):
         self.executeNextAction(nextAction)
     
 class Pedestrian(object):
-        def __init__(self, position,destination=settings.DEFAULT_DESTINATION,worldMap=WORLDMAP):
+        def __init__(self, position,destination=DEFAULT_DESTINATION,worldMap=WORLDMAP):
             #speed: Return the speed the car is currently at
             #position: Position of the car - ie: the patch it's on
             self.position = position
@@ -126,14 +132,18 @@ class Pedestrian(object):
         
         #sensors FIX ME
         #actuators
-        def walk(self,orientation=self.current_orientation):
+        def walk(self,orientation=None):
             #Orientation should be something like
+            if orientation == None:
+                orientation = self.current_orientation
+
             new_pos = [self.position[0] + orientation[0] * self.speed, self.position[1] + orientation[1] * self.speed]
             
             if not possiblePosition(new_pos):
                 raise PositionError("I am a person and I'm attempting to walk to impossible position {}".format(new_pos))
             else:
                 self.position = new_pos
+                #still doesnt exist
                 self.crashed = checkForCrash(new_pos,world_map)
                 return self.position
     
