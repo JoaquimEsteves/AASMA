@@ -23,10 +23,12 @@ class Cars(object):
     def drive(self,orientation=self.current_orientation):
 		#Orientation should be something like
         new_pos = [self.position[0] + orientation[0] * self.speed, self.position[1] + orientation[1] * self.speed]
+        
         if not possiblePosition(new_pos):
             raise PositionError("I am a car and I'm attempting to drive to impossible position {}".format(new_pos))
         else:
             self.position = new_pos
+            checkForCrash(new_pos,world_map)
             return self.position
     
     
@@ -54,10 +56,14 @@ class Cars(object):
         while self.speed > 0:		 
             hitTheBreaks(self)   
     
-    
-    #Sensors   
     def hitTheBreaks(self):
         new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
         pos = drive(new_orientation)
-        didICrash?(pos) 
+        checkForCrash(pos,world_map) 
+    def accelerate(self):
+        self.speed = self.speed + 1
+        drive(self)
+    
+    #Sensors   
+    
