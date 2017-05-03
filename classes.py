@@ -17,6 +17,9 @@ class Cars(object):
         #current orientation: describes which way the car is oriented
         self.current_orientation = [1,0]
 
+
+
+    #ACTUATORS
     def drive(self,orientation=self.current_orientation):
 		#Orientation should be something like
         new_pos = [self.position[0] + orientation[0] * self.speed, self.position[1] + orientation[1] * self.speed]
@@ -26,13 +29,35 @@ class Cars(object):
             self.position = new_pos
             return self.position
     
+    
+    def turnLeft(self):
+        """turns the car to the left acording to his perspective, assume a birdseye view!
+            effectively [x,y] becomes [-y,x]
+        """
+        if self.current_orientation not in ACCEPTABLE_ORIENTATIONS:
+            raise OrientationError("I am a car and my orientation \"{}\" seems to be a bit wonky!".format(self.current_orientation))
+        else:
+            new_orientation = [  - self.current_orientation [1] , self.current_orientation[0] ]
+            return True
+            
+    def turnRight(self):
+        """turns the car to the right acording to his perspective, assume a birdseye view!
+            effectively [x,y] becomes [y,-x]
+        """
+        if self.current_orientation not in ACCEPTABLE_ORIENTATIONS:
+            raise OrientationError("I am a car and my orientation \"{}\" seems to be a bit wonky!".format(self.current_orientation))
+        else:
+            new_orientation = [ self.current_orientation [1] ,  - self.current_orientation[0] ]
+            return True
+        
+    def stop(self):
+        while self.speed > 0:		 
+            hitTheBreaks(self)   
+    
+    
+    #Sensors   
     def hitTheBreaks(self):
         new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
         pos = drive(new_orientation)
         didICrash?(pos) 
-     
-    def stop(self):
-        while self.speed > 0:		 
-            hitTheBreaks(self)   
-       
