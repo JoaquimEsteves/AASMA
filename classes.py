@@ -41,6 +41,8 @@ class Cars(object):
         """
         if self.current_orientation not in ACCEPTABLE_ORIENTATIONS:
             raise OrientationError("I am a car and my orientation \"{}\" seems to be a bit wonky!".format(self.current_orientation))
+        if self.speed > 2:
+            raise CannotTurnError("I am a car that's going a bit too fast to turn!")
         else:
             new_orientation = [  - self.current_orientation [1] , self.current_orientation[0] ]
             return True
@@ -49,8 +51,11 @@ class Cars(object):
         """turns the car to the right acording to his perspective, assume a birdseye view!
             effectively [x,y] becomes [y,-x]
         """
+        
         if self.current_orientation not in ACCEPTABLE_ORIENTATIONS:
             raise OrientationError("I am a car and my orientation \"{}\" seems to be a bit wonky!".format(self.current_orientation))
+        if self.speed > 2:
+            raise CannotTurnError("I am a car that's going a bit too fast to turn!")
         else:
             new_orientation = [ self.current_orientation [1] ,  - self.current_orientation[0] ]
             return True
@@ -62,11 +67,11 @@ class Cars(object):
     def hitTheBreaks(self):
         new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
-        pos = drive(new_orientation)
+        pos = self.drive(new_orientation)
         self.crashed =  checkForCrash(pos,world_map) 
     def accelerate(self):
         self.speed = self.speed + 1
-        drive(self)
+        self.drive()
     
     def executeNextAction(self,nextAction):
         if nextAction == "accelerate":
@@ -81,7 +86,10 @@ class Cars(object):
             self.turnLeft()
         elif nextAction == "drive":
             self.drive()
-        
+    #INTELIGENT PARTS    
+    #planning
+    def planAhead(self):
+        return None #FIX ME
     #run cycle
     def run(self):
         self.crashed = checkForCrash(pos,world_map)
@@ -91,7 +99,7 @@ class Cars(object):
         if self.position == self.destination:
             print "I HAVE REACHER MY DESTINATION! {}".format(self.position)
             return
-        self.plan = self.planAhead(self)
+        self.plan = self.planAhead()
         nextAction = self.plan[0]
         for pl in self.plan[:3]
             if pl.startswith("TURN"):
