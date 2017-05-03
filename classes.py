@@ -16,6 +16,8 @@ class Cars(object):
         self.destination = destination
         #current orientation: describes which way the car is oriented
         self.current_orientation = [1,0]
+        self.crashed = False
+        self.plan = []
 
     #Sensors   
     #FIX ME
@@ -29,7 +31,7 @@ class Cars(object):
             raise PositionError("I am a car and I'm attempting to drive to impossible position {}".format(new_pos))
         else:
             self.position = new_pos
-            checkForCrash(new_pos,world_map)
+            self.crashed = checkForCrash(new_pos,world_map)
             return self.position
     
     
@@ -61,10 +63,47 @@ class Cars(object):
         new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
         pos = drive(new_orientation)
-        checkForCrash(pos,world_map) 
+        self.crashed =  checkForCrash(pos,world_map) 
     def accelerate(self):
         self.speed = self.speed + 1
         drive(self)
+    
+    def executeNextAction(self,nextAction):
+        if nextAction == "accelerate":
+            self.accelerate()
+        elif nextAction == "hitTheBreaks":
+            self.hitTheBreaks()
+        elif nextAction == "stop":
+            self.stop()
+        elif nextAction == "turnRight":
+            self.turnRight()
+        elif nextAction == "turnLeft":
+            self.turnLeft()
+        elif nextAction == "drive":
+            self.drive()
+        
+    #run cycle
+    def run(self):
+        self.crashed = checkForCrash(pos,world_map)
+        if self.crashed == True:
+            print "I HAVE CRASHED! THIS IS TERRIBLE!"
+            return
+        if self.position == self.destination:
+            print "I HAVE REACHER MY DESTINATION! {}".format(self.position)
+            return
+        self.plan = self.planAhead(self)
+        nextAction = self.plan[0]
+        for pl in self.plan[:3]
+            if pl.startswith("TURN"):
+                #Will be either left or right
+                self.turn_signal_status = pl[5:]
+                self.executeNextAction(nextAction)
+                #we return here just so that we put the turn signal in the currect position
+                #imagine for example that we have a plan with turn left drive, then turn right.
+                #We want the turn signal to be left, until it turning left is no longer in the first 3 positions of the array
+                return
+        self.turn_signal_status = TURN_SIG_OFF
+        self.executeNextAction(nextAction)
     
 class Pedestrian(object):
         def __init__(self, position,destination=settings.DEFAULT_DESTINATION,worldMap=WORLDMAP):
@@ -75,6 +114,7 @@ class Pedestrian(object):
             self.destination = destination
             #current orientation: describes which way the car is oriented
             self.current_orientation = [1,0]
+            self.crashed = False
         
         #sensors FIX ME
         #actuators
@@ -86,7 +126,7 @@ class Pedestrian(object):
                 raise PositionError("I am a person and I'm attempting to walk to impossible position {}".format(new_pos))
             else:
                 self.position = new_pos
-                checkForCrash(new_pos,world_map)
+                self.crashed = checkForCrash(new_pos,world_map)
                 return self.position
     
     
