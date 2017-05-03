@@ -17,7 +17,8 @@ class Cars(object):
         #current orientation: describes which way the car is oriented
         self.current_orientation = [1,0]
 
-
+    #Sensors   
+    #FIX ME
 
     #ACTUATORS
     def drive(self,orientation=self.current_orientation):
@@ -65,5 +66,4 @@ class Cars(object):
         self.speed = self.speed + 1
         drive(self)
     
-    #Sensors   
-    
+
