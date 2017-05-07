@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """All project settings are defined here"""
 import os
+from Maps import *
 # Set loggin as debug level
 DEBUG = True
 
@@ -14,7 +15,10 @@ DESTINATIONS_REACHED = 0
 DESTINATIONS_REACHED_CARS = 0
 DESTINATIONS_REACHED_PEDESTRIANS = 0
 
-ACCEPTABLE_ORIENTATIONS = [ [0,1] , [0,-1] , [ 1, 0] [-1,0] ]
+ACCEPTABLE_ORIENTATIONS = [ [0,1], [0,-1], [1, 0], [-1,0] ]
 
 #MAP
-WORLDMAP = None
+WORLDMAP = MAP
+
+
+
