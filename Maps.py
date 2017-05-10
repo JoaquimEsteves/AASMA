@@ -1,3 +1,37 @@
+# !/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
+#Node Object
+class Node(object):
+    def __init__(self,node_type,position,adjacentNodes):
+        """
+        Node object to use in relation with the MAP
+        type: Indicates if the node is a wall, a free space, or a parking slot
+        position: simple [x y] array
+        adjacentNodes: Array of other node objects. Important because e are dealing with roads, and as such we have nodes with direction
+        ocupiedBy: Array that describes objects that are ocupying this node. Generally speaking, if two objects (cars/pedestrians) ocupy the same node, we have a crash!
+        """
+        self._type = node_type
+        self._position = position
+        self._adjacentNodes = adjacentNodes
+        self._ocupiedBy = []
+        
+        def isAdjacent(self,node):
+            """return true if we can drive/walk to input node from this one"""
+            if node in self._adjacentNodes:
+                return True
+            else:
+                return False
+        
+        def checkForCrashNode(self):
+            """Counts the number of non Null elements in the attribute ocupiedBy, if it's bigger than 1, returns true."""
+            number_of_ocupied = len(filter(lambda x: x is not None, self._ocupiedBy)) 
+            if number_of_ocupied > 1:
+                return True
+            else:
+                return False
+
 #maps definition
 WALL = 'X'
 FREE = ' '
@@ -218,6 +252,18 @@ for i in range(12, 15):
 MAP = SimpleMap
 
 
+#Construction of node Map
+
+#NodeMap = MAP
+
+NodeMap = [[None for x in range(40)] for y in range(20)]
+
+for y in range(0,40):
+    for x in range(0,20):
+        #print "x: {} y: {}".format(x,y)
+        NodeMap[x][y] = Node( MAP[x][y] ,[x,y], None)	
+
+
 # # # auxiliar functions on maps # # #
 def printMap(): 
     for e in MAP:
@@ -225,6 +271,8 @@ def printMap():
         for c in e:
             a += ' ' + c
         print a
+
+#printMap()
 
 def printMapMatrix():
     a = "   "
