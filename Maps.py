@@ -1,6 +1,7 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
 
+#use djstra and replace this node and graph class
 
 #Node Object
 class Node(object):
@@ -28,6 +29,12 @@ class Node(object):
             """Counts the number of non Null elements in the attribute ocupiedBy, if it's bigger than 1, returns true."""
             number_of_ocupied = len(filter(lambda x: x is not None, self._ocupiedBy)) 
             if number_of_ocupied > 1:
+                return True
+            else:
+                return False
+        #FIX ME, should compare itself with non-possible positions like wall, pedestriane etc JOAQUIM FIXME
+        def possiblePosition(self, position):
+            if self.position == position:
                 return True
             else:
                 return False

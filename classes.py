@@ -3,12 +3,13 @@
 from settings import * 
 from CustomExceptions import *
 from utils import *
+from Maps import *
 
 
 
 class Car(object):
 
-    def __init__(self, position,destination=DEFAULT_DESTINATION,worldMap=WORLDMAP):
+    def __init__(self, position,destination=DEFAULT_DESTINATION):
         #speed: Return the speed the car is currently at
         self.speed = 0
         #position: Position of the car - ie: the patch it's on
@@ -21,22 +22,24 @@ class Car(object):
         self.current_orientation = [1,0]
         self.crashed = False
         self.plan = []
+        self.worldmap = WORLDMAP
+        #self.checkForCrash = False
 
     #Sensors   
     #FIX ME
 
     #ACTUATORS
     def drive(self,orientation=None):
-		#Orientation should be something like
+        #Orientation should be something like
         if orientation == None:
             orientation = self.current_orientation
         new_pos = [self.position[0] + orientation[0] * self.speed, self.position[1] + orientation[1] * self.speed]
-        if not possiblePosition(new_pos):
+        if not Node.possiblePosition(new_pos):
             raise PositionError("I am a car and I'm attempting to drive to impossible position {}".format(new_pos))
         else:
             self.position = new_pos
             #abstraction these still don't exist yet
-            self.crashed = checkForCrash(new_pos,world_map)
+            self.crashed = Node.checkForCrashNode(new_pos, self.worldmap)
             return self.position
     
     
@@ -68,14 +71,14 @@ class Car(object):
     def stop(self):
         while self.speed > 0:		 
             #still doesnt exist
-            hitTheBreaks(self)
+            self.hitTheBreaks(self)
     
     def hitTheBreaks(self):
         new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
         pos = self.drive(new_orientation)
-        #still doesnt exist
-        self.crashed =  checkForCrash(pos,world_map) 
+        #still doesnt existFIXME
+        self.crashed =  Node.checkForCrash(pos, self.worldmap)
     def accelerate(self):
         self.speed = self.speed + 1
         self.drive()
@@ -99,8 +102,8 @@ class Car(object):
         return None #FIX ME
     #run cycle
     def run(self):
-        #still doesnt exist
-        self.crashed = checkForCrash(pos,world_map)
+        #still doesnt existFIXME
+        self.crashed = Node.checkForCrash(self.position, self.worldmap)
         if self.crashed == True:
             print "I HAVE CRASHED! THIS IS TERRIBLE!"
             return
@@ -140,13 +143,13 @@ class Pedestrian(object):
                 orientation = self.current_orientation
 
             new_pos = [self.position[0] + orientation[0] * self.speed, self.position[1] + orientation[1] * self.speed]
-            
-            if not possiblePosition(new_pos):
+
+            if not Node.possiblePosition(new_pos):
                 raise PositionError("I am a person and I'm attempting to walk to impossible position {}".format(new_pos))
             else:
                 self.position = new_pos
                 #still doesnt exist
-                self.crashed = checkForCrash(new_pos,world_map)
+                self.crashed = self.checkForCrash(new_pos, self.world_map)
                 return self.position
     
     
@@ -173,4 +176,4 @@ class Pedestrian(object):
         def stop(self):
             self.speed = 0
         def accelerate(self):
-            self.speed = 1
+            self.speed = self.speed + 1
