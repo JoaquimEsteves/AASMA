@@ -27,6 +27,17 @@ class Car(object):
 
     #Sensors   
     #FIX ME
+    #zebra ahead?
+    def check_zebra(self):
+        #how many nodes ahead
+        if self.position == ZEBRA:
+            self.hitTheBreaks()
+        elif self.position == ZEBRA and self.position == Pedestrian:
+            self.stop()
+    #parking lot?
+    #road ahead?
+    #if we want to make things harder check for people 2 or 3 nodes ahead
+
 
     #ACTUATORS
     def drive(self,orientation=None):
@@ -136,6 +147,12 @@ class Pedestrian(object):
             self.crashed = False
         
         #sensors FIX ME
+
+        #should be check for car in the 2 or 3 nodes on the left/right?
+        #if zebra
+        #if road
+        #if parking lot?
+        #thats it i guess
         #actuators
         def walk(self,orientation=None):
             #Orientation should be something like
