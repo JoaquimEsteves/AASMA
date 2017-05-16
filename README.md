@@ -13,7 +13,6 @@ Number of pedestrians = 40 (for example)
 
 Final state: Number od moving car = 0 and number of pedestrians = 0
 
-
 Variables:
 NumberOfCars
 NumberOfMovingCars
@@ -65,6 +64,14 @@ Sensor:
                 if parking_spot ahead and free, then move forward and stop!
                 if parking_spot aheas and !free, then turn left (same as for walls)
                 
-        
+  
+  Planning:
+  
+  Disjktra:
+  
+  GoodCars and BadCars:
+  
+  More events?
+  
                 
  
