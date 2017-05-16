@@ -3,6 +3,28 @@
 Default car velocity: FIX ME
 Default pawn velocity: FIX ME (probably 1 or 0,5)
 
+Initial state:
+PedestrianPositions: random on pedestrian zones
+CarPositions: random on free zones
+PedestrianDirections: random according to right direction of the road
+CarDirections: random
+Number of car = number of parking spots = 20
+Number of pedestrians = 40 (for example)
+
+Final state: Number od moving car = 0 and number of pedestrians = 0
+
+
+Variables:
+NumberOfCars
+NumberOfMovingCars
+NumberOfPedestrians
+--
+NumberOfGoodCars
+NumberOfBadCars
+
+Goal of car:            find a parking spot and stop
+Goal od pedestrian:     find some goal positions (?)
+
 Sensor: 
         -see all positions untill a wall is met or the end of the map;
         -check x number of positions ahead
@@ -37,7 +59,12 @@ Sensor:
                 if car wants to turn left-> check position ahead, if car wait for 1 cycle and recheck or if there's car                                                         in the position before the entrance on the right (+2, +1), wait 1 cycle and recheck, or there's a car in the position (+3, -1) wait 1 cycle at the entrance
                   HANDLE CHECKLIGHTS AFTER ALL THIS IS DONE (some more ifs getters nothing hard)
                   
+               
+               
+   Parking:
+                if parking_spot ahead and free, then move forward and stop!
+                if parking_spot aheas and !free, then turn left (same as for walls)
                 
-             
+        
                 
  
