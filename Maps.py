@@ -18,26 +18,27 @@ class Node(object):
         self._adjacentNodes = adjacentNodes
         self._ocupiedBy = []
         
-        def isAdjacent(self,node):
-            """return true if we can drive/walk to input node from this one"""
-            if node in self._adjacentNodes:
-                return True
-            else:
-                return False
         
-        def checkForCrashNode(self):
-            """Counts the number of non Null elements in the attribute ocupiedBy, if it's bigger than 1, returns true."""
-            number_of_ocupied = len(filter(lambda x: x is not None, self._ocupiedBy)) 
-            if number_of_ocupied > 1:
-                return True
-            else:
-                return False
-        #FIX ME, should compare itself with non-possible positions like wall, pedestriane etc JOAQUIM FIXME
-        def possiblePosition(self, position):
-            if self.position == position:
-                return True
-            else:
-                return False
+    def checkForCrashNode(self):
+        """Counts the number of non Null elements in the attribute ocupiedBy, if it's bigger than 1, returns true."""
+        number_of_ocupied = len(filter(lambda x: x is not None, self._ocupiedBy)) 
+        if number_of_ocupied > 1:
+            return True
+        else:
+            return False
+    
+    def isAdjacent(self,node):
+        """return true if we can drive/walk to input node from this one"""
+        if node in self._adjacentNodes:
+            return True
+        else:
+            return False
+    #FIX ME, should compare itself with non-possible positions like wall, pedestriane etc JOAQUIM FIXME
+    def possiblePosition(self, position):
+        if self.position == position:
+            return True
+        else:
+            return False
 
 #maps definition
 WALL = 'X'
@@ -271,12 +272,26 @@ NodeMap = [[None for x in range(40)] for y in range(20)]
 for y in range(0,40):
     for x in range(0,20):
         #print "x: {} y: {}".format(x,y)
-        NodeMap[x][y] = Node( MAP[x][y] ,[x,y], None)   
+        NodeMap[x][y] = Node( MAP[x][y] ,[x,y], [])   
 
 
+### DEFINING ADJACENT NODES FOR NODE MAP
+#NODE MAP IS DEFINED AS [DOWN] [RIGHT]
+for i in range(0,19):
+    NodeMap[i][0]._adjacentNodes.append(NodeMap[i+1][0])
+
+    
+for i in range(18,1,-1):
+    NodeMap[i][1]._adjacentNodes.append(NodeMap[i-1][1])
+
+#edje cases
+NodeMap[0][1]._adjacentNodes.append(NodeMap[0][0])    
+NodeMap[19][0]._adjacentNodes.append(NodeMap[19][1])
+NodeMap[15][1]._adjacentNodes.append(NodeMap[15][2])
+
+
+    
 # # # auxiliar functions on maps # # #
-
-#def __init__(self, position,destination=DEFAULT_DESTINATION):
 
 def printMap(): 
     for e in NodeMap:

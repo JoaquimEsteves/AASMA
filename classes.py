@@ -198,11 +198,3 @@ class Pedestrian(object):
             self.speed = 0
         def accelerate(self):
             self.speed = self.speed + 1
-
-            
-NodeMap[0][0]._ocupiedBy.append( Car([0,0]))
-NodeMap[0][0]._ocupiedBy.append( Car([0,0]))
-
-#a = NodeMap[0][0].checkForCrashNode()
-
-#print 'OIOIOIOI HERE I CHECK FOR A CRASH LMAO {}'.format(a)
