@@ -28,11 +28,16 @@ Sensor:
                 all cars slow down.
                 if car wants to turn right, check position ahead, if car wait for 1 cycle and recheck
                 else move
-                if car wants to go forward, check if there's car in the position before the entrance on the right (+1, +1)
+                
+                if car wants to go forward, check if there's car in the position before the entrance on the right (+2, +1)
                      or a car ahead of him (+1,+0) THERES A HUGE DEMON HERE: IF 4 CARS APPEAR AT THE SAME TIME IN DIFFERENT
                                                     ENTRANCES!!!!!
                      
                      
-               
+                if car wants to turn left-> check position ahead, if car wait for 1 cycle and recheck or if there's car                                                         in the position before the entrance on the right (+2, +1), wait 1 cycle and recheck, or there's a car in the position (+3, -1) wait 1 cycle at the entrance
+                  HANDLE CHECKLIGHTS AFTER ALL THIS IS DONE (some more ifs getters nothing hard)
+                  
+                
+             
                 
  
