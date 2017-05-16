@@ -10,6 +10,9 @@ from Maps import *
 class Car(object):
 
     def __init__(self, position,destination=DEFAULT_DESTINATION):
+		#visual representation to be used in the map!
+        self._visual = 'C'
+	
         #speed: Return the speed the car is currently at
         self.speed = 0
         #position: Position of the car - ie: the patch it's on
@@ -137,7 +140,8 @@ class Car(object):
     
 class Pedestrian(object):
         def __init__(self, position,destination=DEFAULT_DESTINATION,worldMap=WORLDMAP):
-            #speed: Return the speed the car is currently at
+            #visual representation to be used in the map
+            self._visual = 'P'
             #position: Position of the car - ie: the patch it's on
             self.position = position
             #destination: Describes the patch the car wants to go to 
@@ -194,3 +198,11 @@ class Pedestrian(object):
             self.speed = 0
         def accelerate(self):
             self.speed = self.speed + 1
+
+            
+NodeMap[0][0]._ocupiedBy.append( Car([0,0]))
+NodeMap[0][0]._ocupiedBy.append( Car([0,0]))
+
+#a = NodeMap[0][0].checkForCrashNode()
+
+#print 'OIOIOIOI HERE I CHECK FOR A CRASH LMAO {}'.format(a)

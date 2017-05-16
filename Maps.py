@@ -271,15 +271,21 @@ NodeMap = [[None for x in range(40)] for y in range(20)]
 for y in range(0,40):
     for x in range(0,20):
         #print "x: {} y: {}".format(x,y)
-        NodeMap[x][y] = Node( MAP[x][y] ,[x,y], None)	
+        NodeMap[x][y] = Node( MAP[x][y] ,[x,y], None)   
 
 
 # # # auxiliar functions on maps # # #
+
+#def __init__(self, position,destination=DEFAULT_DESTINATION):
+
 def printMap(): 
-    for e in MAP:
+    for e in NodeMap:
         a = ""
         for c in e:
-            a += ' ' + c
+            if c._ocupiedBy != []:
+                a += ' ' + c._ocupiedBy[0]._visual
+            else:
+                a += ' ' + c._type
         print a
 
 #printMap()
