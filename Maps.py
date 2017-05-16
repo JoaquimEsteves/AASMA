@@ -98,6 +98,9 @@ for i in range(12, 14):
     SimpleMap[i][16] = WALL
 for i in range(11, 13):
     SimpleMap[i][21] = WALL
+for i in range(36, 38):
+    SimpleMap[16][i] = WALL
+        
 
 # # # ZEBRAS # # #
 for i in range(5, 7):
