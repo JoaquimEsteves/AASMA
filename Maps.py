@@ -312,11 +312,15 @@ for i in range(39, 33, -1):
 for i in range(0, 5):
     NodeMap[19][i]._adjacentNodes.append(NodeMap[19][i+1])
 
-for i in range(7, 28):
+for i in range(7, 27):
     NodeMap[19][i]._adjacentNodes.append(NodeMap[19][i+1])
 
-for i in range(25, 11, -1):
+for i in range(25, 8, -1):
     NodeMap[18][i]._adjacentNodes.append(NodeMap[18][i-1])
+
+for i in range(19, 15, -1):
+    NodeMap[i][27]._adjacentNodes.append(NodeMap[i-1][27])
+
 #things missing bottom fix
 #center bottom
 for i in range(2, 26):
@@ -385,6 +389,10 @@ for i in range(11, 14):
 for i in range(33, 26, -1):
     NodeMap[9][i]._adjacentNodes.append(NodeMap[9][i+1])
 
+for i in range(8, 3, -1):
+    NodeMap[17][i]._adjacentNodes.append(NodeMap[17][i-1])
+
+
 #my edge cases
 NodeMap[1][5]._adjacentNodes.append(NodeMap[2][5])
 NodeMap[1][9]._adjacentNodes.append(NodeMap[2][9])
@@ -424,6 +432,15 @@ NodeMap[11][8]._adjacentNodes.append(NodeMap[10][8])
 NodeMap[10][8]._adjacentNodes.append(NodeMap[10][9])
 NodeMap[14][13]._adjacentNodes.append(NodeMap[13][13])
 NodeMap[13][13]._adjacentNodes.append(NodeMap[12][13])
+NodeMap[18][8]._adjacentNodes.append(NodeMap[17][8])
+NodeMap[17][3]._adjacentNodes.append(NodeMap[18][3])
+NodeMap[18][3]._adjacentNodes.append(NodeMap[18][2])
+NodeMap[18][2]._adjacentNodes.append(NodeMap[18][1])
+#NodeMap[19][27]._adjacentNodes.append(NodeMap[18][27])
+NodeMap[15][26]._adjacentNodes.append(NodeMap[16][26])
+NodeMap[16][26]._adjacentNodes.append(NodeMap[17][26])
+NodeMap[17][26]._adjacentNodes.append(NodeMap[18][26])
+NodeMap[18][26]._adjacentNodes.append(NodeMap[18][25])
 #left roundabout
 NodeMap[12][13]._adjacentNodes.append(NodeMap[11][13])
 NodeMap[11][13]._adjacentNodes.append(NodeMap[11][14])
