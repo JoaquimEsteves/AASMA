@@ -315,12 +315,48 @@ for i in range(0, 5):
 for i in range(7, 28):
     NodeMap[19][i]._adjacentNodes.append(NodeMap[19][i+1])
 
-for i in range(34, 40):
-    NodeMap[19][i]._adjacentNodes.append(NodeMap[19][i + 1])
-
-for i in range(27, 11, -1):
+for i in range(25, 11, -1):
     NodeMap[18][i]._adjacentNodes.append(NodeMap[18][i-1])
 #things missing bottom fix
+#center bottom
+for i in range(2, 26):
+    NodeMap[15][i]._adjacentNodes.append(NodeMap[15][i+1])
+
+for i in range(28, 34):
+    NodeMap[15][i]._adjacentNodes.append(NodeMap[15][i+1])
+
+for i in range(29, 25, -1):
+    NodeMap[14][i]._adjacentNodes.append(NodeMap[14][i-1])
+
+for i in range(23, 13, -1):
+    NodeMap[14][i]._adjacentNodes.append(NodeMap[14][i - 1])
+
+for i in range(11, 8, -1):
+    NodeMap[14][i]._adjacentNodes.append(NodeMap[14][i - 1])
+
+for i in range(32, 28, -1):
+    NodeMap[14][i]._adjacentNodes.append(NodeMap[14][i - 1])
+
+for i in range(25, 29):
+    NodeMap[15][i]._adjacentNodes.append(NodeMap[15][i+1])
+
+for i in range(26, 22, -1):
+    NodeMap[14][i]._adjacentNodes.append(NodeMap[14][i - 1])
+
+for i in range(14, 10, -1):
+    NodeMap[14][i]._adjacentNodes.append(NodeMap[14][i - 1])
+
+for i in range(9, 1, -1):
+    NodeMap[14][i]._adjacentNodes.append(NodeMap[14][i - 1])
+
+for i in range (13, 10, -1):
+    NodeMap[i][4]._adjacentNodes.append(NodeMap[i-1][4])
+
+for i in range (13, 10, -1):
+    NodeMap[i][8]._adjacentNodes.append(NodeMap[i-1][8])
+
+
+
 #my edge cases
 NodeMap[1][5]._adjacentNodes.append(NodeMap[2][5])
 NodeMap[1][9]._adjacentNodes.append(NodeMap[2][9])
@@ -350,14 +386,39 @@ NodeMap[18][4]._adjacentNodes.append(NodeMap[18][5])
 NodeMap[18][5]._adjacentNodes.append(NodeMap[18][6])
 NodeMap[18][6]._adjacentNodes.append(NodeMap[18][7])
 NodeMap[18][7]._adjacentNodes.append(NodeMap[19][7])
-
+NodeMap[14][34]._adjacentNodes.append(NodeMap[14][33])
+NodeMap[14][33]._adjacentNodes.append(NodeMap[14][32])
+NodeMap[14][4]._adjacentNodes.append(NodeMap[13][4])
+NodeMap[11][4]._adjacentNodes.append(NodeMap[10][4])
+NodeMap[10][4]._adjacentNodes.append(NodeMap[10][5])
+NodeMap[14][8]._adjacentNodes.append(NodeMap[13][8])
+NodeMap[11][8]._adjacentNodes.append(NodeMap[10][8])
+NodeMap[10][8]._adjacentNodes.append(NodeMap[10][9])
+NodeMap[14][13]._adjacentNodes.append(NodeMap[13][13])
+NodeMap[13][13]._adjacentNodes.append(NodeMap[12][13])
+#left roundabout
+NodeMap[12][13]._adjacentNodes.append(NodeMap[11][13])
+NodeMap[11][13]._adjacentNodes.append(NodeMap[11][14])
+NodeMap[14][25]._adjacentNodes.append(NodeMap[13][25])
+#right roundabout
+NodeMap[13][25]._adjacentNodes.append(NodeMap[12][25])
+NodeMap[12][25]._adjacentNodes.append(NodeMap[11][25])
+NodeMap[11][25]._adjacentNodes.append(NodeMap[11][26])
+####
+NodeMap[14][31]._adjacentNodes.append(NodeMap[13][31])
+NodeMap[13][30]._adjacentNodes.append(NodeMap[14][30])
+NodeMap[13][24]._adjacentNodes.append(NodeMap[14][24])
+NodeMap[13][12]._adjacentNodes.append(NodeMap[14][12])
+NodeMap[13][7]._adjacentNodes.append(NodeMap[14][7])
+NodeMap[13][3]._adjacentNodes.append(NodeMap[14][3])
 #you can start fucking this up now joaquim
 #edje cases
 NodeMap[0][0]._adjacentNodes.append(NodeMap[1][0])
 NodeMap[19][0]._adjacentNodes.append(NodeMap[19][1])
 NodeMap[15][1]._adjacentNodes.append(NodeMap[15][2])
+NodeMap[2][1]._adjacentNodes.append(NodeMap[1][1])
+NodeMap[1][1]._adjacentNodes.append(NodeMap[1][2])
 
-    
 # # # auxiliar functions on maps # # #
 
 #xico don't fuck this up B)
@@ -380,7 +441,12 @@ for i in range(18,1,-1):
     
 for i in range(3,18):
     NodeMap[i][34]._adjacentNodes.append(NodeMap[i+1][34])
-    
+
+for e in NodeMap:
+    for c in e:
+        if c._adjacentNodes == []:
+            c._type='n'
+
 def printMap(): 
     for e in NodeMap:
         a = ""
