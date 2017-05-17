@@ -293,6 +293,27 @@ NodeMap[15][1]._adjacentNodes.append(NodeMap[15][2])
     
 # # # auxiliar functions on maps # # #
 
+#xico don't fuck this up B)
+for i in range(19, 0,-1):
+    NodeMap[i][39]._adjacentNodes.append(NodeMap[i-1][39])
+    NodeMap[i][39]._type='U'
+for i in range(1,18):
+    NodeMap[i][38]._adjacentNodes.append(NodeMap[i+1][38])
+    NodeMap[i][38]._type='D'
+for i in range(33,39):
+    NodeMap[19][i]._adjacentNodes.append(NodeMap[19][i+1])
+for i in range(38,35,-1):
+    NodeMap[18][i]._adjacentNodes.append(NodeMap[18][i-1])
+    
+NodeMap[18][34]._adjacentNodes.append(NodeMap[18][33])
+NodeMap[18][33]._adjacentNodes.append(NodeMap[19][33])
+
+for i in range(18,1,-1):
+    NodeMap[i][35]._adjacentNodes.append(NodeMap[i-1][35])
+    
+for i in range(3,18):
+    NodeMap[i][34]._adjacentNodes.append(NodeMap[i+1][34])
+    
 def printMap(): 
     for e in NodeMap:
         a = ""
