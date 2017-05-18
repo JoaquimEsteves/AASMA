@@ -18,7 +18,11 @@ class Node(object):
         self._adjacentNodes = adjacentNodes
         self._ocupiedBy = []
         
-        
+    
+    def removeFromOcupied(self,agent):
+        if agent in self._ocupiedBy:
+            self._ocupiedBy.remove(agent)
+    
     def checkForCrashNode(self):
         """Counts the number of non Null elements in the attribute ocupiedBy, if it's bigger than 1, returns true."""
         number_of_ocupied = len(filter(lambda x: x is not None, self._ocupiedBy)) 
@@ -289,7 +293,7 @@ for i in range(18,1,-1):
 #top
 for i in range(2, 9): #could be 2-8
     NodeMap[1][i]._adjacentNodes.append(NodeMap[1][i+1])
-    NodeMap[1][i]._type = 'R'
+    # NodeMap[1][i]._type = 'R'
 #i think in range goes to i-1
 for i in range(9, 15):
     NodeMap[3][i]._adjacentNodes.append(NodeMap[3][i+1])
@@ -626,10 +630,10 @@ NodeMap[2][11]._adjacentNodes.append(NodeMap[1][11])
 #xico don't fuck this up B)
 for i in range(19, 0,-1):
     NodeMap[i][39]._adjacentNodes.append(NodeMap[i-1][39])
-    NodeMap[i][39]._type='U'
+    # NodeMap[i][39]._type='U'
 for i in range(1,18):
     NodeMap[i][38]._adjacentNodes.append(NodeMap[i+1][38])
-    NodeMap[i][38]._type='D'
+    # NodeMap[i][38]._type='D'
 for i in range(33,39):
     NodeMap[19][i]._adjacentNodes.append(NodeMap[19][i+1])
 for i in range(38,35,-1):
