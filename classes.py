@@ -5,7 +5,7 @@ from CustomExceptions import *
 from utils import *
 from Maps import *
 
-log = Logger(debug=settings.DEBUG)
+log = Logger(debug=True)
 
 class Agent(object):
     def __init__(self,id,position,destination=DEFAULT_DESTINATION):
@@ -69,7 +69,7 @@ class Car(Agent):
             i._ocupiedBy.append(self)
             if i.checkForCrashNode():
                 self._crashed = True
-                log.info("I am a car and I've crashed at position {} {} !".format(self._position[0],self._position[1])
+                log.info("I am a car and I've crashed at position {} {} !".format(self._position[0],self._position[1]))
             else:
                 i.removeFromOcupied(self)
         
@@ -127,7 +127,7 @@ class Car(Agent):
             log.info("I (id:{}) am going to slow down a bit! My speed is {}".format(self._id,self._speed))
             return
         
-        if self.allClearAhead() #FIX ME
+        if self.allClearAhead(): #FIX ME
             self.accelerate()
             log.info("HAHA I THE FEARLESS (id:{}) AM GOING TO ACCELERATE MY BOYS!".format(self._id,self._speed))
             return

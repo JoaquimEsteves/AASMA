@@ -117,4 +117,4 @@ class Logger(object):
 
     def warning(self, msg):
         if self._warning:
-print("[WARNING]: {}".format(msg))
+            print("[WARNING]: {}".format(msg))
