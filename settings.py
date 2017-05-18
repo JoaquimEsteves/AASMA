@@ -18,7 +18,7 @@ DESTINATIONS_REACHED_PEDESTRIANS = 0
 ACCEPTABLE_ORIENTATIONS = [ [0,1], [0,-1], [1, 0], [-1,0] ]
 
 #MAP
-WORLDMAP = SimpleMap #comes from Maps
+WORLDMAP = NodeMap #comes from Maps
 
 
 
