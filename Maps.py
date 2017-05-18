@@ -392,9 +392,80 @@ for i in range(33, 26, -1):
 for i in range(8, 3, -1):
     NodeMap[17][i]._adjacentNodes.append(NodeMap[17][i-1])
 
+for i in range(2, 6):
+    NodeMap[i][5]._adjacentNodes.append(NodeMap[i+1][5])
+
+for i in range(7, 10):
+    NodeMap[i][7]._adjacentNodes.append(NodeMap[i+1][7])
+
+for i in range(10, 5, -1):
+    NodeMap[i][8]._adjacentNodes.append(NodeMap[i-1][8])
+
+for i in range(14, 21):
+    NodeMap[6][i]._adjacentNodes.append(NodeMap[6][i+1])
+
+for i in range(24, 30):
+    NodeMap[6][i]._adjacentNodes.append(NodeMap[6][i+1])
+
+for i in range(7, 10):
+    NodeMap[i][30]._adjacentNodes.append(NodeMap[i+1][30])
+
+for i in range(8, 3, -1):
+    NodeMap[i][31]._adjacentNodes.append(NodeMap[i-1][31])
+
+for i in range(29, 25, -1):
+    NodeMap[5][i]._adjacentNodes.append(NodeMap[5][i-1])
+
+for i in range(24, 20, -1):
+    NodeMap[3][i]._adjacentNodes.append(NodeMap[3][i-1])
+
+for i in range(18, 12, -1):
+    NodeMap[5][i]._adjacentNodes.append(NodeMap[5][i-1])
+
 
 #my edge cases
 NodeMap[1][5]._adjacentNodes.append(NodeMap[2][5])
+NodeMap[6][5]._adjacentNodes.append(NodeMap[6][6])
+NodeMap[6][6]._adjacentNodes.append(NodeMap[6][7])
+NodeMap[6][7]._adjacentNodes.append(NodeMap[7][7])
+NodeMap[5][8]._adjacentNodes.append(NodeMap[5][7])
+NodeMap[5][7]._adjacentNodes.append(NodeMap[5][6])
+NodeMap[5][6]._adjacentNodes.append(NodeMap[4][6])
+NodeMap[4][6]._adjacentNodes.append(NodeMap[3][6])
+NodeMap[3][6]._adjacentNodes.append(NodeMap[2][6])
+NodeMap[2][6]._adjacentNodes.append(NodeMap[1][6])
+#
+NodeMap[6][21]._adjacentNodes.append(NodeMap[5][21])
+NodeMap[5][21]._adjacentNodes.append(NodeMap[4][21])
+NodeMap[4][21]._adjacentNodes.append(NodeMap[4][22])
+NodeMap[4][22]._adjacentNodes.append(NodeMap[4][23])
+NodeMap[4][23]._adjacentNodes.append(NodeMap[5][23])
+NodeMap[5][23]._adjacentNodes.append(NodeMap[5][24])
+NodeMap[5][24]._adjacentNodes.append(NodeMap[6][24])
+#NodeMap[6][24]._adjacentNodes.append(NodeMap[6][25])
+NodeMap[6][30]._adjacentNodes.append(NodeMap[7][30])
+NodeMap[9][31]._adjacentNodes.append(NodeMap[8][31])
+NodeMap[5][30]._adjacentNodes.append(NodeMap[5][29])
+NodeMap[5][25]._adjacentNodes.append(NodeMap[4][25])
+NodeMap[4][25]._adjacentNodes.append(NodeMap[4][24])
+NodeMap[4][24]._adjacentNodes.append(NodeMap[3][24])
+NodeMap[3][20]._adjacentNodes.append(NodeMap[4][20])
+NodeMap[4][20]._adjacentNodes.append(NodeMap[5][20])
+NodeMap[5][20]._adjacentNodes.append(NodeMap[5][19])
+NodeMap[5][19]._adjacentNodes.append(NodeMap[5][18])
+NodeMap[5][18]._adjacentNodes.append(NodeMap[4][18])
+NodeMap[4][18]._adjacentNodes.append(NodeMap[3][18])
+NodeMap[3][18]._adjacentNodes.append(NodeMap[2][18])
+NodeMap[2][18]._adjacentNodes.append(NodeMap[1][18])
+NodeMap[5][12]._adjacentNodes.append(NodeMap[6][12])
+NodeMap[6][12]._adjacentNodes.append(NodeMap[7][12])
+NodeMap[7][12]._adjacentNodes.append(NodeMap[8][12])
+
+#just in case
+NodeMap[3][31]._adjacentNodes.append(NodeMap[3][32])
+
+
+
 NodeMap[1][9]._adjacentNodes.append(NodeMap[2][9])
 NodeMap[2][9]._adjacentNodes.append(NodeMap[3][9])
 NodeMap[3][9]._adjacentNodes.append(NodeMap[3][10])
@@ -402,7 +473,18 @@ NodeMap[3][14]._adjacentNodes.append(NodeMap[2][14])
 NodeMap[2][14]._adjacentNodes.append(NodeMap[1][14])
 NodeMap[1][14]._adjacentNodes.append(NodeMap[1][15])
 NodeMap[1][17]._adjacentNodes.append(NodeMap[2][17])
+NodeMap[2][17]._adjacentNodes.append(NodeMap[3][17])
+NodeMap[3][17]._adjacentNodes.append(NodeMap[4][17])
+NodeMap[4][17]._adjacentNodes.append(NodeMap[5][17])
+
+NodeMap[18][11]._adjacentNodes.append(NodeMap[17][11])
+NodeMap[17][11]._adjacentNodes.append(NodeMap[16][11])
+NodeMap[16][11]._adjacentNodes.append(NodeMap[15][11])
+
 NodeMap[1][30]._adjacentNodes.append(NodeMap[2][30])
+NodeMap[2][30]._adjacentNodes.append(NodeMap[3][30])
+NodeMap[3][30]._adjacentNodes.append(NodeMap[4][30])
+NodeMap[4][30]._adjacentNodes.append(NodeMap[5][30])
 NodeMap[0][13]._adjacentNodes.append(NodeMap[1][13])
 NodeMap[1][13]._adjacentNodes.append(NodeMap[2][13])
 NodeMap[2][13]._adjacentNodes.append(NodeMap[2][12])
@@ -463,6 +545,9 @@ NodeMap[11][12]._adjacentNodes.append(NodeMap[11][13])
 NodeMap[11][12]._adjacentNodes.append(NodeMap[12][12])
 NodeMap[12][12]._adjacentNodes.append(NodeMap[13][12])
 NodeMap[13][12]._adjacentNodes.append(NodeMap[14][12])
+NodeMap[7][13]._adjacentNodes.append(NodeMap[6][13])
+NodeMap[6][13]._adjacentNodes.append(NodeMap[6][14])
+
 #right roundabout
 NodeMap[13][25]._adjacentNodes.append(NodeMap[12][25])
 NodeMap[12][25]._adjacentNodes.append(NodeMap[11][25])
@@ -485,7 +570,9 @@ NodeMap[13][24]._adjacentNodes.append(NodeMap[14][24])
 NodeMap[14][31]._adjacentNodes.append(NodeMap[13][31])
 #NodeMap[13][30]._adjacentNodes.append(NodeMap[14][30])
 
-
+NodeMap[15][10]._adjacentNodes.append(NodeMap[16][10])
+NodeMap[16][10]._adjacentNodes.append(NodeMap[17][10])
+NodeMap[17][10]._adjacentNodes.append(NodeMap[18][10])
 NodeMap[13][7]._adjacentNodes.append(NodeMap[14][7])
 #NodeMap[13][3]._adjacentNodes.append(NodeMap[14][3])
 NodeMap[10][7]._adjacentNodes.append(NodeMap[11][7])
@@ -520,6 +607,15 @@ for i in range(38,35,-1):
     
 NodeMap[18][34]._adjacentNodes.append(NodeMap[18][33])
 NodeMap[18][33]._adjacentNodes.append(NodeMap[19][33])
+NodeMap[2][35]._adjacentNodes.append(NodeMap[1][35])
+NodeMap[1][35]._adjacentNodes.append(NodeMap[1][36])
+NodeMap[12][38]._adjacentNodes.append(NodeMap[12][37])
+NodeMap[12][37]._adjacentNodes.append(NodeMap[12][36])
+NodeMap[12][36]._adjacentNodes.append(NodeMap[12][35])
+#may look weird but is needed
+NodeMap[9][35]._adjacentNodes.append(NodeMap[9][34])
+NodeMap[14][35]._adjacentNodes.append(NodeMap[14][34])
+NodeMap[2][35]._adjacentNodes.append(NodeMap[2][34])
 
 for i in range(18,1,-1):
     NodeMap[i][35]._adjacentNodes.append(NodeMap[i-1][35])
