@@ -5,6 +5,7 @@ from CustomExceptions import *
 from utils import *
 from Maps import *
 
+log = Logger(debug=settings.DEBUG)
 
 class Agent(object):
     def __init__(self,id,position,destination=DEFAULT_DESTINATION):
