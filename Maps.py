@@ -40,6 +40,7 @@ class Node(object):
         else:
             return False
 
+
 #maps definition
 WALL = 'X'
 FREE = ' '
@@ -591,6 +592,35 @@ NodeMap[2][1]._adjacentNodes.append(NodeMap[1][1])
 NodeMap[1][1]._adjacentNodes.append(NodeMap[1][2])
 NodeMap[10][30]._adjacentNodes.append(NodeMap[11][30])
 
+
+#parking spaces
+NodeMap[19][4]._adjacentNodes.append(NodeMap[19][5])
+NodeMap[19][5]._adjacentNodes.append(NodeMap[19][6])
+NodeMap[19][6]._adjacentNodes.append(NodeMap[19][7])
+NodeMap[17][6]._adjacentNodes.append(NodeMap[18][6])
+NodeMap[18][6]._adjacentNodes.append(NodeMap[17][6])
+NodeMap[17][5]._adjacentNodes.append(NodeMap[18][5])
+NodeMap[18][5]._adjacentNodes.append(NodeMap[19][5])
+NodeMap[18][34]._adjacentNodes.append(NodeMap[18][33])
+NodeMap[19][34]._adjacentNodes.append(NodeMap[19][33])
+NodeMap[18][35]._adjacentNodes.append(NodeMap[18][34])
+NodeMap[19][35]._adjacentNodes.append(NodeMap[19][35])
+NodeMap[11][35]._adjacentNodes.append(NodeMap[11][36])
+NodeMap[10][35]._adjacentNodes.append(NodeMap[10][36])
+NodeMap[9][35]._adjacentNodes.append(NodeMap[9][36])
+NodeMap[8][35]._adjacentNodes.append(NodeMap[8][36])
+NodeMap[7][35]._adjacentNodes.append(NodeMap[7][36])
+NodeMap[5][35]._adjacentNodes.append(NodeMap[5][36])
+NodeMap[4][35]._adjacentNodes.append(NodeMap[4][36])
+NodeMap[4][34]._adjacentNodes.append(NodeMap[4][33])
+NodeMap[5][35]._adjacentNodes.append(NodeMap[5][33])
+NodeMap[7][34]._adjacentNodes.append(NodeMap[7][33])
+NodeMap[8][34]._adjacentNodes.append(NodeMap[8][33])
+NodeMap[11][34]._adjacentNodes.append(NodeMap[11][33])
+NodeMap[12][34]._adjacentNodes.append(NodeMap[12][33])
+NodeMap[13][34]._adjacentNodes.append(NodeMap[13][33])
+NodeMap[2][12]._adjacentNodes.append(NodeMap[1][12])
+NodeMap[2][11]._adjacentNodes.append(NodeMap[1][11])
 # # # auxiliar functions on maps # # #
 
 #xico don't fuck this up B)
