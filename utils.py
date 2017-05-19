@@ -1,7 +1,8 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
-from Maps import *
 from classes import *
+from Maps import *
+
 from collections import defaultdict, deque
     #graph and djisktra algorithm
     #defaultdict in contrast will simply create any items that you try to access
@@ -24,8 +25,8 @@ class Graph:
 
 g = Graph()
 #GRAPH FOR CARS
-for lines in NodeMap:
-    for columns in NodeMap[0]:
+for lines in range(len(NodeMap)):
+    for columns in range(len(NodeMap[0])):
         if NodeMap[lines][columns] not in g.nodes:
             g.add_node(NodeMap[lines][columns])
             for node in NodeMap[lines][columns]._adjacentNodes:
@@ -37,24 +38,24 @@ for lines in NodeMap:
 CAR_GRAPH = g
 
 gp = Graph()
-for lines in NodeMap:
-    for columns in NodeMap[0]:
+for lines in range(len(NodeMap)):
+    for columns in range(len(NodeMap[0])):
         if  NodeMap[lines][columns]._type != WALL:
             if NodeMap[lines][columns] not in gp.nodes:
                 gp.add_node(NodeMap[lines][columns])
             #for i in range(max(NodeMap[lines][columns]._position))
             if ((lines - 1) >= 0 and (NodeMap[lines - 1][columns] not in gp.nodes) and (NodeMap[lines-1][columns]._type != WALL)):
                 gp.add_node(NodeMap[lines - 1][columns])
-                gp.add_edge(NodeMap[lines][columns], NodeMap[lines-1][columns] , NodeMap[lines-1][columns]._personHeuristic)
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines-1][columns] , NodeMap[lines-1][columns]._pedestrianHeuristic)
             if ((lines + 1) < 20 and (NodeMap[lines + 1][columns] not in gp.nodes) and (NodeMap[lines+1][columns]._type != WALL)):
                 gp.add_node(NodeMap[lines + 1][columns])
-                gp.add_edge(NodeMap[lines][columns], NodeMap[lines + 1][columns], NodeMap[lines + 1][columns]._personHeuristic)
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines + 1][columns], NodeMap[lines + 1][columns]._pedestrianHeuristic)
             if (columns - 1) >= 0 and (NodeMap[lines][columns - 1] not in gp.nodes and (NodeMap[lines][columns-1]._type != WALL)):
                 gp.add_node(NodeMap[lines][columns - 1])
-                gp.add_edge(NodeMap[lines][columns], NodeMap[lines][columns - 1], NodeMap[lines][columns - 1]._personHeuristic)
-            if (columns + 1) < 400 and (NodeMap[lines][columns + 1] not in gp.nodes and (NodeMap[lines][columns+1]._type != WALL)):
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines][columns - 1], NodeMap[lines][columns - 1]._pedestrianHeuristic)
+            if (columns + 1) < 40 and (NodeMap[lines][columns + 1] not in gp.nodes and (NodeMap[lines][columns+1]._type != WALL)):
                 gp.add_node(NodeMap[lines][columns + 1])
-                gp.add_edge(NodeMap[lines][columns], NodeMap[lines][columns + 1], NodeMap[lines][columns + 1]._personHeuristic)
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines][columns + 1], NodeMap[lines][columns + 1]._pedestrianHeuristic)
 
 PERSON_GRAPH = gp
 

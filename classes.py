@@ -5,7 +5,7 @@ from CustomExceptions import *
 from utils import *
 from Maps import *
 
-log = Logger(debug=True)
+#log = Logger(debug=settings.DEBUG)
 
 class Agent(object):
     def __init__(self,id,position,orientation=[1,0],destination=DEFAULT_DESTINATION):
@@ -42,33 +42,7 @@ class Car(Agent):
     #Sensors   
     #FIX ME
     #zebra ahead?
-    def dijkstra_matrix(self):
-        # k = int(input("Enter the source vertex"))
-        k = self.getCurrentNode()._position[0]
-        matrix = NodeMap
-        m = len(matrix)
-        n = len(matrix[0])
-        cost = [[0 for x in range(m)] for x in range(1)]
-        offsets = []
-        offsets.append(k)
-        elepos = 0
-
-        for j in range(m):
-            cost[0][j] = matrix[k][j]
-        mini = 999
-        for x in range(m - 1):
-            mini = 999
-            for j in range(m):
-                if cost[0][j] <= mini and j not in offsets:
-                    mini = cost[0][j]
-                    elepos = j
-            offsets.append(elepos)
-            for j in range(m):
-                if cost[0][j] > cost[0][elepos] + matrix[elepos][j]:
-                    cost[0][j] = cost[0][elepos] + matrix[elepos][j]
-        print("The shortest path", offsets)
-        print("The cost to various vertices in order", cost)
-       
+    
     def getCurrentNode(self):
         return self._worldmap[self.position[0]][self.position[1]]
  
@@ -80,17 +54,18 @@ class Car(Agent):
             turn_left = [  - self._orientation [1] , self._orientation[0] ]
             turn_right = [ self._orientation [1] ,  - self._orientation[0] ]
             
-            log.debug("I HAVE TO CHANGE MY ORIENTATION!")
+            #log.debug("I HAVE TO CHANGE MY ORIENTATION!")
+            
             if newNode == [ oldNode[0] + turn_left[0], oldNode[1] + turn_left[1]]:
-                log.debug("I HAVE TURNED LEFT!")
+                #log.debug("I HAVE TURNED LEFT!")
                 self._orientation = turn_left
                 return TURN_SIG_LEFT
             elif newNode == [ oldNode[0] + turn_right[0], oldNode[1] + turn_right[1]]:
-                log.debug("I HAVE TURNED RIGHT!")
+                #log.debug("I HAVE TURNED RIGHT!")
                 self._orientation = turn_right
                 return TURN_SIG_RIGHT
             else:
-                log.error("THIS PLAN IS TELLING ME TO GO BACKWARDS!")
+                #log.error("THIS PLAN IS TELLING ME TO GO BACKWARDS!")
                 raise OrientationError()
                 
     def check_zebra(self):
@@ -137,7 +112,7 @@ class Car(Agent):
             self.setOrientation(previous_node,i)
             if i.checkForCrashNode():
                 self._crashed = True
-                log.info("I am a car and I've crashed at position {} {} !".format(self.position[0],self.position[1]))
+                #log.info("I am a car and I've crashed at position {} {} !".format(self.position[0],self.position[1]))
             else:
                 i.removeFromOcupied(self)
         
@@ -201,16 +176,16 @@ class Car(Agent):
         #Plan next action
         if self.dangerAhead():#FIX ME
             self.hitTheBreaks() 
-            log.info("I (id:{}) am going to slow down a bit! My speed is {}".format(self._id,self._speed))
+            #log.info("I (id:{}) am going to slow down a bit! My speed is {}".format(self._id,self._speed))
             return
         
         if self.allClearAhead(): #FIX ME
             self.accelerate()
-            log.info("HAHA I THE FEARLESS (id:{}) AM GOING TO ACCELERATE MY BOYS!".format(self._id,self._speed))
+            #log.info("HAHA I THE FEARLESS (id:{}) AM GOING TO ACCELERATE MY BOYS!".format(self._id,self._speed))
             return
             
         self.drive()
-        log.info("I (id:{}) am just going to keep driving at this pace! {}".format(self._id,self._speed))
+        #log.info("I (id:{}) am just going to keep driving at this pace! {}".format(self._id,self._speed))
     
 class Pedestrian(Agent):
         def __init__(self,id, position,destination=DEFAULT_DESTINATION):
@@ -272,5 +247,3 @@ class Pedestrian(Agent):
             self.speed = self.speed + 1
 
 
-c = Car(1, [0,0])
-c.dijkstra_matrix()
