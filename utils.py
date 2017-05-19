@@ -134,7 +134,7 @@ def shortest_path(graph, start_node, final_node):
     complete_path.appendleft(start_node)
     complete_path.append(final_node)
 
-    return visited[final_node], list(complete_path)
+    return list(complete_path)
 
 
 #testcode

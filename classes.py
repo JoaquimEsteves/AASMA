@@ -127,7 +127,7 @@ class Car(Agent):
     def hitTheBreaks(self):
         self.speed = self.speed - 1
         pos = self.drive()
-        self.crashed =  getCurrent().checkForCrash()
+        self.crashed =  self.getCurrentNode().checkForCrash()
     
     def accelerate(self):
         self.speed = self.speed + 1
@@ -149,7 +149,7 @@ class Car(Agent):
     ###################INTELIGENT PARTS################################################################    
     #planning
     def planAhead(self):
-        return None #FIX ME
+        return shortest_path(CAR_GRAPH, self.position, DEFAULT_DESTINATION) #FIX ME
     
     #actiave turn signals, or not!
     def checkForTurns(self):
@@ -169,7 +169,7 @@ class Car(Agent):
         if self.position == self.destination:
             print "I HAVE REACHER MY DESTINATION! {}".format(self.position)
             return
-        
+
         #This function returns left right or no turn signal depending on if there is a turn coming up soon.
         self.turn_signal_status = self.checkForTurns() 
         
@@ -177,13 +177,9 @@ class Car(Agent):
         if self.dangerAhead():#FIX ME
             self.hitTheBreaks() 
             #log.info("I (id:{}) am going to slow down a bit! My speed is {}".format(self._id,self._speed))
-            return
-        
-        if self.allClearAhead(): #FIX ME
+        else:
             self.accelerate()
             #log.info("HAHA I THE FEARLESS (id:{}) AM GOING TO ACCELERATE MY BOYS!".format(self._id,self._speed))
-            return
-            
         self.drive()
         #log.info("I (id:{}) am just going to keep driving at this pace! {}".format(self._id,self._speed))
     
