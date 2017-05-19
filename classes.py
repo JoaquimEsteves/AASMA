@@ -80,8 +80,9 @@ class Car(Agent):
     def dangerAhead(self):
         #visible_zone = [[None for x in range(10)] for y in range(10)]
         nearby_objects = []
-        for line in range(self.position[0] - 5, self.position[0] + 6): #TODO: CAREFUL OF SEGFAULT
-            for column in range(self.position[1] - 5, self.position[1] + 6):
+        
+        for line in range(max(self.position[0] - 5,0), min(self.position[0] + 6,19)): 
+            for column in range(max(self.position[1] - 5,0), min(self.position[1] + 6,39)):
                 if NodeMap[line][column]._ocupiedBy != []:
                     nearby_objects += [NodeMap[line][column]._ocupiedBy[0]]
         my_orientation = self._orientation
