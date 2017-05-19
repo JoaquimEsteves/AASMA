@@ -1,5 +1,10 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
+
+class NegativeSpeedError(Exception):
+    def __init__(self,message="Something went wrong with my speed!"):
+        super(NegativeSpeedError,self).__init__(message)
+
 class PositionError(Exception):
     def __init__(self, message="Something went wrong with the position"):
 

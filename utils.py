@@ -1,6 +1,6 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
-from classes import *
+#from classes import *
 from Maps import *
 from settings import *
 
@@ -60,35 +60,35 @@ for lines in range(len(NodeMap)):
 
 PERSON_GRAPH = gp
 
-class Logger(object):
-    """Utils Logging has 4 variables that controls if the log goes to the output(screen)
-    _error, _debug, _warning and _info default:  all loggers are enable except debug, which is False
-    to enable debug log just add the following lines to your code
-    from utils import Logger
-    log = Logger(debug=True)
-    log.info("Information message")
-    """
-    def __init__(self, debug=False, info=True, error=True, warning=True):
-        self._error = error
-        self._debug = debug
-        self._warning = warning
-        self._info = info
+# class Logger(object):
+    # """Utils Logging has 4 variables that controls if the log goes to the output(screen)
+    # _error, _debug, _warning and _info default:  all loggers are enable except debug, which is False
+    # to enable debug log just add the following lines to your code
+    # from utils import Logger
+    # log = Logger(debug=True)
+    # log.info("Information message")
+    # """
+    # def __init__(self, debug=False, info=True, error=True, warning=True):
+        # self._error = error
+        # self._debug = debug
+        # self._warning = warning
+        # self._info = info
 
-    def error(self, msg):
-        if self._error:
-            print("[ERROR]: {}".format(msg))
+    # def error(self, msg):
+        # if self._error:
+            # print("[ERROR]: {}".format(msg))
 
-    def debug(self, msg):
-        if self._debug:
-            print("[DEBUG]: {}".format(msg))
+    # def debug(self, msg):
+        # if self._debug:
+            # print("[DEBUG]: {}".format(msg))
 
-    def info(self, msg):
-        if self._info:
-            print("[INFO]: {}".format(msg))
+    # def info(self, msg):
+        # if self._info:
+            # print("[INFO]: {}".format(msg))
 
-    def warning(self, msg):
-        if self._warning:
-            print("[WARNING]: {}".format(msg))
+    # def warning(self, msg):
+        # if self._warning:
+            # print("[WARNING]: {}".format(msg))
 
 
 
@@ -182,20 +182,20 @@ def lookForTurns(plan,orientation,turn_signal_status,map=NodeMap):
     """plan is a list with 4 elements, they are the nodes the car might turn in 
        the next cycle, this function returns the new plan, updated with more accurate information
     """
-        new_plan = [plan[0]]
-        new_orientation = determineNewOr(orientation,turn_signal_status)
-        for n in plan[1:]:
-            pos_possible_node = [n._position[0] + new_orientation[0],[n._position[1] + new_orientation[1]]
-            try:
-                for nod_adj in n._adjacentNodes:
-                    if nod_adj == pos_possible_node:
-                        new_plan += [n,nod_adj]
-                        break
-        len(new_plan) == 1:
-            #This should never happen
-            print "This shouldn't happen! Turn signal was off but I could not find an adjacent node with the correct description!"
-        return new_plan
-    
+    new_plan = [plan[0]]
+    new_orientation = determineNewOr(orientation,turn_signal_status)
+    for n in plan[1:]:
+        adjacentNodes = n._adjacentNodes
+        pos_possible_node = [n._position[0] + new_orientation[0],[n._position[1] + new_orientation[1]]]
+        for nod_adj in adjacentNodes:
+            if nod_adj == pos_possible_node:
+                new_plan += [n,nod_adj]
+                break
+    if len(new_plan) == 1:
+        #This should never happen
+        print "This shouldn't happen! Turn signal was off but I could not find an adjacent node with the correct description!"
+    return new_plan
+
     
 #testcode
 
@@ -216,7 +216,7 @@ graph.add_edge('F', 'G', 2)
     #		return False
     #	else:
     # #return True
-#print shortest_path(graph, 'A', 'D')
+# print shortest_path(graph, 'A', 'D')
 #print shortest_path(graph, 'A', 'B')
 #print shortest_path(graph, 'B', 'G')
 

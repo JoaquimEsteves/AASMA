@@ -17,12 +17,18 @@ class Agent(object):
         self.destination = destination
         self._orientation = orientation
         self._speed = 0
+        self._reachedDestination = False
         
     def __eq__(self, other):
+        """two agents are equal if they have the same id
+        we are overriding pythons == method, similarly to java's .equals()"""
         return self._id == other._id
     
     def addSelfToNewNode(self,x,y):
         self._worldmap[x][y]._ocupiedBy.append(self)
+        
+    def move(self):
+        print "If you see this message I have an object oriented error!"
 
 
         
@@ -44,10 +50,12 @@ class Car(Agent):
     #zebra ahead?
     
     def getCurrentNode(self):
+        """return current node on the world map"""
         return self._worldmap[self.position[0]][self.position[1]]
  
     #Check if I changed orientation!
     def setOrientation(self,oldNode,newNode):
+        """check if I'm going to have to change orientation to go from the old node to the new one!"""
         if self._speed == 0 or (oldNode.position == newNode.position) :
             return False
         if newNode != [ oldNode[0] + self._orientation[0] , oldNode[1] + self._orientation[1]]:
@@ -68,17 +76,8 @@ class Car(Agent):
                 #log.error("THIS PLAN IS TELLING ME TO GO BACKWARDS!")
                 raise OrientationError()
                 
-    def check_zebra(self):
-        #how many nodes ahead
-        if self.position == ZEBRA:
-            self.hitTheBreaks()
-        elif self.position == ZEBRA and self.position == Pedestrian:
-            self.stop()
-    #parking lot?
-    #road ahead?
-    #if we want to make things harder check for people 2 or 3 nodes ahead
-
     def dangerAhead(self):
+        """Main planning function, tells us if we are free to accelerate, if we can just stay at the same speed or if we have to break!"""
         #visible_zone = [[None for x in range(10)] for y in range(10)]
         nearby_objects = []
         
@@ -102,23 +101,35 @@ class Car(Agent):
 
     #ACTUATORS
     def drive(self):
+        """function that moves the car. If speed is 0 goes nowhere.
+        slowing down and accelerating still call this function"""
         #this will be my final position, based on my speed!
-        final_node = self._plan[self._speed]
+        if self.position == self.destination:
+            print "I HAVE REACHER MY DESTINATION! {}".format(self.position)
+            self._reachedDestination = True
+        final_node = self._plan[1]
         previous_node = self.getCurrentNode()
         self.getCurrentNode().removeFromOcupied(self)
         #So now for every node I'm going to drive through, I have to check if I'll crash into something!
-        for i in self._plan[self._speed]:
-            i._ocupiedBy.append(self)
-            self.setOrientation(previous_node,i)
-            if i.checkForCrashNode():
-                self._crashed = True
-                #log.info("I am a car and I've crashed at position {} {} !".format(self.position[0],self.position[1]))
-            else:
-                i.removeFromOcupied(self)
         
+        #remove this node form the plan since i'm going to drive away from it!
+        self._plan = self._plan[1:]
+        
+        self._plan[0]._ocupiedBy.append(self)
+        self.setOrientation(previous_node,self._plan[0])
+        if self._plan[0].checkForCrashNode():
+            self.crashed = True
+            print "I HAVE CRASHED!"
+            #log.info("I am a car and I've crashed at position {} {} !".format(self.position[0],self.position[1]))
+
         self.position = final_node.position
+        addSelfToNewNode(self.position[0],self.position[1])
         return self.position
-            
+    
+    def move(self):
+        """Overriding super class method"""
+        self.drive()
+    
     def stop(self):
         while self.speed > 0:		 
             #still doesnt exist
@@ -126,33 +137,37 @@ class Car(Agent):
     
     def hitTheBreaks(self):
         self.speed = self.speed - 1
-        pos = self.drive()
-        self.crashed =  self.getCurrentNode().checkForCrash()
+        #pos = self.drive()
+        #self.crashed =  self.getCurrentNode().checkForCrash()
     
     def accelerate(self):
         self.speed = self.speed + 1
-        self.drive()
+        #self.drive()
     
-    def executeNextAction(self,nextAction):
-        if nextAction == "accelerate":
-            self.accelerate()
-        elif nextAction == "hitTheBreaks":
-            self.hitTheBreaks()
-        elif nextAction == "stop":
-            self.stop()
-        elif nextAction == "turnRight":
-            self.turnRight()
-        elif nextAction == "turnLeft":
-            self.turnLeft()
-        elif nextAction == "drive":
-            self.drive()
-    ###################INTELIGENT PARTS################################################################    
+    # def executeNextAction(self,nextAction):
+        # if nextAction == "accelerate":
+            # self.accelerate()
+        # elif nextAction == "hitTheBreaks":
+            # self.hitTheBreaks()
+        # elif nextAction == "stop":
+            # self.stop()
+        # elif nextAction == "turnRight":
+            # self.turnRight()
+        # elif nextAction == "turnLeft":
+            # self.turnLeft()
+        # elif nextAction == "drive":
+            # self.drive()
+    ##################INTELIGENT PARTS################################################################    
     #planning
     def planAhead(self):
-        return shortest_path(CAR_GRAPH, self.position, DEFAULT_DESTINATION) #FIX ME
+        """applies disjktras algorithm"""
+        return shortest_path(CAR_GRAPH, self.position, self.destination)
     
     #actiave turn signals, or not!
     def checkForTurns(self):
+        """sets the value of turn signal to left or right if the car is going to turn soon
+            how soon depends on it's speed!
+        """
         currentNode = self.getCurrentNode()
         for nextNode in self._plan[self._speed]:
             if self.setOrientation(currentNode, nextNode):
@@ -163,6 +178,7 @@ class Car(Agent):
     
     #run cycle
     def run(self,MAP):
+        """The run function determines whether the car will simply drive, accelerate or brake!"""
         if self.crashed == True:
             print "I HAVE CRASHED! THIS IS TERRIBLE!"
             return
@@ -174,15 +190,14 @@ class Car(Agent):
         self.turn_signal_status = self.checkForTurns() 
         
         #Plan next action
-        if self.dangerAhead():#FIX ME
-            self.hitTheBreaks() 
-            #log.info("I (id:{}) am going to slow down a bit! My speed is {}".format(self._id,self._speed))
+        if self.dangerAhead():
+            self.hitTheBreaks()
         else:
             self.accelerate()
-            #log.info("HAHA I THE FEARLESS (id:{}) AM GOING TO ACCELERATE MY BOYS!".format(self._id,self._speed))
-        self.drive()
-        #log.info("I (id:{}) am just going to keep driving at this pace! {}".format(self._id,self._speed))
-    
+            
+        speed_to_return = self._speed
+        return [self,speed_to_return]
+
 class Pedestrian(Agent):
         def __init__(self,id, position,destination=DEFAULT_DESTINATION):
             Agent.__init__(self,id,position,destination)
