@@ -127,7 +127,7 @@ def main():
     dijkstra_matrix(matrix, n, m)
 
 
-main()
+#main()
 
 
 
