@@ -648,6 +648,7 @@ NodeMap[15][1]._adjacentNodes.append(NodeMap[15][2])
 NodeMap[2][1]._adjacentNodes.append(NodeMap[1][1])
 NodeMap[1][1]._adjacentNodes.append(NodeMap[1][2])
 NodeMap[10][30]._adjacentNodes.append(NodeMap[11][30])
+NodeMap[19][11]._adjacentNodes.append(NodeMap[18][11])
 
 
 #parking spaces
@@ -655,7 +656,7 @@ NodeMap[19][4]._adjacentNodes.append(NodeMap[19][5])
 NodeMap[19][5]._adjacentNodes.append(NodeMap[19][6])
 NodeMap[19][6]._adjacentNodes.append(NodeMap[19][7])
 NodeMap[17][6]._adjacentNodes.append(NodeMap[18][6])
-NodeMap[18][6]._adjacentNodes.append(NodeMap[17][6])
+#NodeMap[18][6]._adjacentNodes.append(NodeMap[17][6])
 NodeMap[17][5]._adjacentNodes.append(NodeMap[18][5])
 NodeMap[18][5]._adjacentNodes.append(NodeMap[19][5])
 NodeMap[18][34]._adjacentNodes.append(NodeMap[18][33])
