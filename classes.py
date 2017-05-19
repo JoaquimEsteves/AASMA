@@ -161,7 +161,7 @@ class Car(Agent):
     #planning
     def planAhead(self):
         """applies disjktras algorithm"""
-        return shortest_path(CAR_GRAPH, self.position, self.destination)
+        return shortest_path(CAR_GRAPH, self._worldmap[self.position[0]]self.position[1], self.destination)
     
     #actiave turn signals, or not!
     def checkForTurns(self):

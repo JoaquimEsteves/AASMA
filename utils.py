@@ -95,7 +95,9 @@ PERSON_GRAPH = gp
 
 
 def dijsktra(graph, start_node):
+    print "1 - disjktra"
     visited = {start_node: 0}
+    print "2 - disjktra"
     path = {}
     nodes = set(graph.nodes)
     while nodes:
