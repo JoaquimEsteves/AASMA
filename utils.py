@@ -85,13 +85,13 @@ graph.add_edge('F', 'G', 2)
     #		return False
     #	else:
     # #return True
-print shortest_path(graph, 'A', 'D')
-print shortest_path(graph, 'A', 'B')
-print shortest_path(graph, 'B', 'G')
+#print shortest_path(graph, 'A', 'D')
+#print shortest_path(graph, 'A', 'B')
+#print shortest_path(graph, 'B', 'G')
 
 
 ########################################djisktra with matrixes we'll see#############
-def dijkstra(matrix, m, n):
+def dijkstra_matrix(matrix, m, n):
     k = int(input("Enter the source vertex"))
     cost = [[0 for x in range(m)] for x in range(1)]
     offsets = []
@@ -124,7 +124,7 @@ def main():
         for j in range(m):
             matrix[i][j] = int(input("enter the values of the matrix"))
     print(matrix)
-    dijkstra(matrix, n, m)
+    dijkstra_matrix(matrix, n, m)
 
 
 main()

@@ -286,11 +286,11 @@ for y in range(0,6):
 #adjacent Nodes!
 for i in range(0,5):
     SimpleIntersectionNode[i][2]._ocupiedBy.append(SimpleIntersectionNode[i+1][2])
-for i range(5,1,-1):
+for i in range(5,1,-1):
     SimpleIntersectionNode[i][3]._ocupiedBy.append(SimpleIntersectionNode[i-1][3])
 for i in range(0,5):
     SimpleIntersectionNode[2][i]._ocupiedBy.append(SimpleIntersectionNode[2][i+1])
-for i range(5,1,-1):
+for i in range(5,1,-1):
     SimpleIntersectionNode[3][i]._ocupiedBy.append(SimpleIntersectionNode[3][i-1])
 
 PossibleDestinations = [SimpleIntersectionNode[2][0], SimpleIntersectionNode[0][3], SimpleIntersectionNode[3][5], SimpleIntersectionNode[5][2]] 
