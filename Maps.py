@@ -5,7 +5,7 @@
 
 #Node Object
 class Node(object):
-    def __init__(self,node_type,position,adjacentNodes):
+    def __init__(self,node_type,position,adjacentNodes=[]):
         """
         Node object to use in relation with the MAP
         type: Indicates if the node is a wall, a free space, or a parking slot
@@ -17,8 +17,30 @@ class Node(object):
         self._position = position
         self._adjacentNodes = adjacentNodes
         self._ocupiedBy = []
-        
-    
+        self._pedestrianHeuristic = -1
+        self._carHeuristic = -1
+        if node_type == ZEBRA:
+            self._pedestrianHeuristic =  1
+            self._carHeuristic = 2
+        elif node_type == PEDESTRIAN_ZONE:
+            self._pedestrianHeuristic =  1
+            self._carHeuristic = 5
+        elif node_type == FREE:
+            self._pedestrianHeuristic =  1
+            self._carHeuristic = 5
+        elif node_type == PARKING_SPOT:
+            self._pedestrianHeuristic = 1000
+            self._carHeuristic = 4
+
+    WALL = 'X'
+    FREE = ' '
+    PARKING_SPOT = 'E'
+    ZEBRA = 'Z'
+    PEDESTRIAN_ZONE = '0'
+
+    def __es__(self,other):
+        return other._position == self._position
+
     def removeFromOcupied(self,agent):
         if agent in self._ocupiedBy:
             self._ocupiedBy.remove(agent)

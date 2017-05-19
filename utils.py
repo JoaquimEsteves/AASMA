@@ -22,6 +22,42 @@ class Graph:
        self.edges[final_node].append(node_from)
        self.distances[(node_from, final_node)] = distance
 
+g = Graph()
+#GRAPH FOR CARS
+for lines in NodeMap:
+    for columns in NodeMap[0]:
+        if NodeMap[lines][columns] not in g.nodes:
+            g.add_node(NodeMap[lines][columns])
+            for node in NodeMap[lines][columns]._adjacentNodes:
+                if node not in g.nodes:
+                    g.add_node(node)
+                else:
+                    g.add_edge(NodeMap[lines][columns],node, node._carHeuristic)
+
+CAR_GRAPH = g
+
+gp = Graph()
+for lines in NodeMap:
+    for columns in NodeMap[0]:
+        if  NodeMap[lines][columns]._type != WALL:
+            if NodeMap[lines][columns] not in gp.nodes:
+                gp.add_node(NodeMap[lines][columns])
+            #for i in range(max(NodeMap[lines][columns]._position))
+            if ((lines - 1) >= 0 and (NodeMap[lines - 1][columns] not in gp.nodes) and (NodeMap[lines-1][columns]._type != WALL)):
+                gp.add_node(NodeMap[lines - 1][columns])
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines-1][columns] , NodeMap[lines-1][columns]._personHeuristic)
+            if ((lines + 1) < 20 and (NodeMap[lines + 1][columns] not in gp.nodes) and (NodeMap[lines+1][columns]._type != WALL)):
+                gp.add_node(NodeMap[lines + 1][columns])
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines + 1][columns], NodeMap[lines + 1][columns]._personHeuristic)
+            if (columns - 1) >= 0 and (NodeMap[lines][columns - 1] not in gp.nodes and (NodeMap[lines][columns-1]._type != WALL)):
+                gp.add_node(NodeMap[lines][columns - 1])
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines][columns - 1], NodeMap[lines][columns - 1]._personHeuristic)
+            if (columns + 1) < 400 and (NodeMap[lines][columns + 1] not in gp.nodes and (NodeMap[lines][columns+1]._type != WALL)):
+                gp.add_node(NodeMap[lines][columns + 1])
+                gp.add_edge(NodeMap[lines][columns], NodeMap[lines][columns + 1], NodeMap[lines][columns + 1]._personHeuristic)
+
+PERSON_GRAPH = gp
+
 class Logger(object):
     """Utils Logging has 4 variables that controls if the log goes to the output(screen)
     _error, _debug, _warning and _info default:  all loggers are enable except debug, which is False
@@ -125,37 +161,37 @@ graph.add_edge('F', 'G', 2)
 
 
 ########################################djisktra with matrixes we'll see#############
-def dijkstra_matrix():
-    #k = int(input("Enter the source vertex"))
-    k = Car.getCurrentNode()
-    matrix = NodeMap
-    m = len(matrix)
-    n = len(matrix[0])
-    cost = [[0 for x in range(m)] for x in range(1)]
-    offsets = []
-    offsets.append(k)
-    elepos = 0
+# def dijkstra_matrix():
+#     #k = int(input("Enter the source vertex"))
+#     k = ar.getCurrentNode()
+#     matrix = NodeMap
+#     m = len(matrix)
+#     n = len(matrix[0])
+#     cost = [[0 for x in range(m)] for x in range(1)]
+#     offsets = []
+#     offsets.append(k)
+#     elepos = 0
+#
+#
+#     for j in range(m):
+#         cost[0][j] = matrix[k][j]
+#     mini = 999
+#     for x in range(m - 1):
+#         mini = 999
+#         for j in range(m):
+#             if cost[0][j] <= mini and j not in offsets:
+#                 mini = cost[0][j]
+#                 elepos = j
+#         offsets.append(elepos)
+#         for j in range(m):
+#             if cost[0][j] > cost[0][elepos] + matrix[elepos][j]:
+#                 cost[0][j] = cost[0][elepos] + matrix[elepos][j]
+#     print("The shortest path", offsets)
+#     print("The cost to various vertices in order", cost)
 
 
-    for j in range(m):
-        cost[0][j] = matrix[k][j]
-    mini = 999
-    for x in range(m - 1):
-        mini = 999
-        for j in range(m):
-            if cost[0][j] <= mini and j not in offsets:
-                mini = cost[0][j]
-                elepos = j
-        offsets.append(elepos)
-        for j in range(m):
-            if cost[0][j] > cost[0][elepos] + matrix[elepos][j]:
-                cost[0][j] = cost[0][elepos] + matrix[elepos][j]
-    print("The shortest path", offsets)
-    print("The cost to various vertices in order", cost)
-
-
-def main():
-    print("Dijkstras algorithum graph using matrix representation \n")
+#def main():
+    #print("Dijkstras algorithum graph using matrix representation \n")
     #n = int(input("number of elements in row"))
     #m = int(input("number of elements in column"))
     # print("enter the values of the matrix")
@@ -166,7 +202,7 @@ def main():
 
             #matrix[i][j] = int(input("enter the values of the matrix"))
     #print(matrix)
-    dijkstra_matrix()
+    #dijkstra_matrix()
 
 
 #main()

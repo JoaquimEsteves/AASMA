@@ -23,8 +23,8 @@ class Agent(object):
     
     def addSelfToNewNode(self,x,y):
         self._worldmap[x][y]._ocupiedBy.append(self)
-        
-        
+
+
         
 class Car(Agent):
 
@@ -42,13 +42,39 @@ class Car(Agent):
     #Sensors   
     #FIX ME
     #zebra ahead?
+    def dijkstra_matrix(self):
+        # k = int(input("Enter the source vertex"))
+        k = self.getCurrentNode()._position[0]
+        matrix = NodeMap
+        m = len(matrix)
+        n = len(matrix[0])
+        cost = [[0 for x in range(m)] for x in range(1)]
+        offsets = []
+        offsets.append(k)
+        elepos = 0
+
+        for j in range(m):
+            cost[0][j] = matrix[k][j]
+        mini = 999
+        for x in range(m - 1):
+            mini = 999
+            for j in range(m):
+                if cost[0][j] <= mini and j not in offsets:
+                    mini = cost[0][j]
+                    elepos = j
+            offsets.append(elepos)
+            for j in range(m):
+                if cost[0][j] > cost[0][elepos] + matrix[elepos][j]:
+                    cost[0][j] = cost[0][elepos] + matrix[elepos][j]
+        print("The shortest path", offsets)
+        print("The cost to various vertices in order", cost)
        
     def getCurrentNode(self):
-        return self._worldmap[self._position[0]][self._position[1]]
+        return self._worldmap[self.position[0]][self.position[1]]
  
     #Check if I changed orientation!
     def setOrientation(self,oldNode,newNode):
-        if self._speed == 0 or (oldNode._position == newNode._position) :
+        if self._speed == 0 or (oldNode.position == newNode.position) :
             return False
         if newNode != [ oldNode[0] + self._orientation[0] , oldNode[1] + self._orientation[1]]:
             turn_left = [  - self._orientation [1] , self._orientation[0] ]
@@ -88,7 +114,7 @@ class Car(Agent):
         my_orientation = self._orientation
         for obj in nearby_objects:
             obj_orientation = obj._orientation
-            obj_position = obj._position
+            obj_position = obj.position
             obj_speed = obj._speed
             other_positions = []
             for v in range(obj_speed):
@@ -111,12 +137,12 @@ class Car(Agent):
             self.setOrientation(previous_node,i)
             if i.checkForCrashNode():
                 self._crashed = True
-                log.info("I am a car and I've crashed at position {} {} !".format(self._position[0],self._position[1]))
+                log.info("I am a car and I've crashed at position {} {} !".format(self.position[0],self.position[1]))
             else:
                 i.removeFromOcupied(self)
         
-        self._position = final_node._position
-        return self._position
+        self.position = final_node.position
+        return self.position
             
     def stop(self):
         while self.speed > 0:		 
@@ -244,3 +270,7 @@ class Pedestrian(Agent):
             self.speed = 0
         def accelerate(self):
             self.speed = self.speed + 1
+
+
+c = Car(1, [0,0])
+c.dijkstra_matrix()
