@@ -95,9 +95,7 @@ class Car(Agent):
         #So now for every node I'm going to drive through, I have to check if I'll crash into something!
         for i in self._plan[self._speed]:
             i._ocupiedBy.append(self)
-            if self.changedOrientation(previous_node,i):
-                #FIXME
-
+            self.setOrientation(previous_node,i):
             if i.checkForCrashNode():
                 self._crashed = True
                 log.info("I am a car and I've crashed at position {} {} !".format(self._position[0],self._position[1]))
@@ -113,11 +111,10 @@ class Car(Agent):
             self.hitTheBreaks(self)
     
     def hitTheBreaks(self):
-        new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
-        pos = self.drive(new_orientation)
-        #still doesnt existFIXME
-        self.crashed =  Node.checkForCrash(pos, self.worldmap)
+        pos = self.drive()
+        self.crashed =  getCurrent().checkForCrash()
+    
     def accelerate(self):
         self.speed = self.speed + 1
         self.drive()
