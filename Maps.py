@@ -548,6 +548,8 @@ NodeMap[4][17]._adjacentNodes.append(NodeMap[5][17])
 NodeMap[18][11]._adjacentNodes.append(NodeMap[17][11])
 NodeMap[17][11]._adjacentNodes.append(NodeMap[16][11])
 NodeMap[16][11]._adjacentNodes.append(NodeMap[15][11])
+NodeMap[15][11]._adjacentNodes.append(NodeMap[14][11])
+
 NodeMap[15][13]._adjacentNodes.append(NodeMap[14][13])
 NodeMap[0][17]._adjacentNodes.append(NodeMap[1][17])
 
@@ -644,6 +646,8 @@ NodeMap[14][31]._adjacentNodes.append(NodeMap[13][31])
 NodeMap[15][10]._adjacentNodes.append(NodeMap[16][10])
 NodeMap[16][10]._adjacentNodes.append(NodeMap[17][10])
 NodeMap[17][10]._adjacentNodes.append(NodeMap[18][10])
+NodeMap[18][10]._adjacentNodes.append(NodeMap[19][10])
+
 NodeMap[13][7]._adjacentNodes.append(NodeMap[14][7])
 #NodeMap[13][3]._adjacentNodes.append(NodeMap[14][3])
 NodeMap[10][7]._adjacentNodes.append(NodeMap[11][7])
@@ -654,7 +658,7 @@ NodeMap[14][2]._adjacentNodes.append(NodeMap[14][1])
 NodeMap[15][25]._adjacentNodes.append(NodeMap[14][25])
 NodeMap[15][31]._adjacentNodes.append(NodeMap[14][31])
 NodeMap[15][27]._adjacentNodes.append(NodeMap[14][27])
-
+NodeMap[15][4]._adjacentNodes.append(NodeMap[14][4])
 
 #you can start fucking this up now joaquim
 #edje cases
