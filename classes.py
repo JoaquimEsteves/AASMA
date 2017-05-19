@@ -8,13 +8,15 @@ from Maps import *
 log = Logger(debug=True)
 
 class Agent(object):
-    def __init__(self,id,position,destination=DEFAULT_DESTINATION):
+    def __init__(self,id,position,orientation=[1,0],destination=DEFAULT_DESTINATION):
         self._id = id
         self._worldmap = WORLDMAP
         #position: Position of the car - ie: the patch it's on
         self.position = position
         #destination: Describes the patch the agent wants to go to
         self.destination = destination
+        self._orientation = orientation
+        self._speed = 0
         
     def __eq__(self, other):
         return self._id == other._id
@@ -28,19 +30,14 @@ class Car(Agent):
 
     def __init__(self,id, position,orientation=[1,0],destination=DEFAULT_DESTINATION):
         #visual representation to be used in the map!
-        Agent.__init__(self,id,position,destination)
+        Agent.__init__(self,id,position,orientation,destination)
         self._visual = 'C'
         self._id = id
-        #speed: Return the speed the car is currently at
-        self._speed = 0
         #turn_signal_status: Return the status of it's turn signal
         self._turn_signal_status = TURN_SIG_OFF
         self._crashed = False
         #dijsktra
         self._plan = self.planAhead()
-        
-        self._orientation = orientation
-        #self.checkForCrash = False
 
     #Sensors   
     #FIX ME
@@ -83,10 +80,10 @@ class Car(Agent):
     def dangerAhead(self):
         #visible_zone = [[None for x in range(10)] for y in range(10)]
         nearby_objects = []
-        for line in range(self.position[0] - 5, self.position[0] + 6):
+        for line in range(self.position[0] - 5, self.position[0] + 6): #TODO: CAREFUL OF SEGFAULT
             for column in range(self.position[1] - 5, self.position[1] + 6):
-                if NodeMap[line][column] != None:
-                    nearby_objects += [NodeMap[line][column]]
+                if NodeMap[line][column]._ocupiedBy != []:
+                    nearby_objects += [NodeMap[line][column]._ocupiedBy[0]]
         my_orientation = self._orientation
         for obj in nearby_objects:
             obj_orientation = obj._orientation
@@ -94,7 +91,7 @@ class Car(Agent):
             obj_speed = obj._speed
             other_positions = []
             for v in range(obj_speed):
-                other_positions += [v*obj_orientation[0], v*obj_orientation[1]]
+                other_positions += [(v+1)*obj_orientation[0], (v+1)*obj_orientation[1]]
             for other_pos in other_positions:
                 for my_pos in self._plan:
                     if other_pos == my_pos:
