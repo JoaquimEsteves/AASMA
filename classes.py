@@ -154,7 +154,7 @@ class Car(Agent):
     #actiave turn signals, or not!
     def checkForTurns(self):
         currentNode = self.getCurrentNode()
-        for nextNode in self._plan[:4]:
+        for nextNode in self._plan[self._speed]:
             if self.setOrientation(currentNode, nextNode):
                 self._turn_signal_status = self.setOrientation(currentNode, nextNode)
                 return

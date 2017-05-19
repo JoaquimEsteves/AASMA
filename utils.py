@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from classes import *
 from Maps import *
+from settings import *
 
 from collections import defaultdict, deque
     #graph and djisktra algorithm
@@ -149,6 +150,53 @@ def shortest_path(graph, start_node, final_node):
     return complete_path
 
 
+#Auxiliary
+def turnLeft(orientation):
+    """turns the car to the left acording to his perspective, assume a birdseye view!
+        effectively [x,y] becomes [-y,x]
+    """
+    if orientation not in ACCEPTABLE_ORIENTATIONS:
+        raise OrientationError("I am a person and my orientation \"{}\" seems to be a bit wonky!".format(self.current_orientation))
+    else:
+        return [  - self.current_orientation [1] , self.current_orientation[0] ]
+        
+    
+def turnRight(orientation):
+    """turns the car to the right acording to his perspective, assume a birdseye view!
+        effectively [x,y] becomes [y,-x]
+    """
+    if orientation not in ACCEPTABLE_ORIENTATIONS:
+        raise OrientationError("I am a car and my orientation \"{}\" seems to be a bit wonky!".format(self.current_orientation))
+    else:
+        return [ self.current_orientation [1] ,  - self.current_orientation[0] ]
+        
+def determineNewOr(orientation,turn_signal_status):
+    if turn_signal_status == TURN_SIG_OFF:
+        return orientation
+    elif turn_signal_status == TURN_SIG_LEFT:
+        return turnLeft(orientation)
+    elif turn_signal_status == TURN_SIG_RIGHT:
+        return turnRight(orientation)
+
+def lookForTurns(plan,orientation,turn_signal_status,map=NodeMap):
+    """plan is a list with 4 elements, they are the nodes the car might turn in 
+       the next cycle, this function returns the new plan, updated with more accurate information
+    """
+        new_plan = [plan[0]]
+        new_orientation = determineNewOr(orientation,turn_signal_status)
+        for n in plan[1:]:
+            pos_possible_node = [n._position[0] + new_orientation[0],[n._position[1] + new_orientation[1]]
+            try:
+                for nod_adj in n._adjacentNodes:
+                    if nod_adj == pos_possible_node:
+                        new_plan += [n,nod_adj]
+                        break
+        len(new_plan) == 1:
+            #This should never happen
+            print "This shouldn't happen! Turn signal was off but I could not find an adjacent node with the correct description!"
+        return new_plan
+    
+    
 #testcode
 
 graph = Graph()
