@@ -96,6 +96,7 @@ class Car(Agent):
         for i in self._plan[self._speed]:
             i._ocupiedBy.append(self)
             if self.changedOrientation(previous_node,i):
+                #FIXME
 
             if i.checkForCrashNode():
                 self._crashed = True
