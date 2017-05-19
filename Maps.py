@@ -482,6 +482,7 @@ for i in range(18, 12, -1):
 
 
 #my edge cases
+NodeMap[1][6]._adjacentNodes.append(NodeMap[0][6])
 NodeMap[1][5]._adjacentNodes.append(NodeMap[2][5])
 NodeMap[6][5]._adjacentNodes.append(NodeMap[6][6])
 NodeMap[6][6]._adjacentNodes.append(NodeMap[6][7])
@@ -503,6 +504,9 @@ NodeMap[5][24]._adjacentNodes.append(NodeMap[6][24])
 #NodeMap[6][24]._adjacentNodes.append(NodeMap[6][25])
 NodeMap[6][30]._adjacentNodes.append(NodeMap[7][30])
 NodeMap[9][31]._adjacentNodes.append(NodeMap[8][31])
+NodeMap[9][31]._adjacentNodes.append(NodeMap[9][30])
+NodeMap[5][31]._adjacentNodes.append(NodeMap[5][30])
+NodeMap[5][18]._adjacentNodes.append(NodeMap[5][17])
 NodeMap[5][30]._adjacentNodes.append(NodeMap[5][29])
 NodeMap[5][25]._adjacentNodes.append(NodeMap[4][25])
 NodeMap[4][25]._adjacentNodes.append(NodeMap[4][24])
@@ -515,12 +519,18 @@ NodeMap[5][18]._adjacentNodes.append(NodeMap[4][18])
 NodeMap[4][18]._adjacentNodes.append(NodeMap[3][18])
 NodeMap[3][18]._adjacentNodes.append(NodeMap[2][18])
 NodeMap[2][18]._adjacentNodes.append(NodeMap[1][18])
+NodeMap[1][18]._adjacentNodes.append(NodeMap[0][18])
+NodeMap[0][5]._adjacentNodes.append(NodeMap[1][5])
 NodeMap[5][12]._adjacentNodes.append(NodeMap[6][12])
 NodeMap[6][12]._adjacentNodes.append(NodeMap[7][12])
 NodeMap[7][12]._adjacentNodes.append(NodeMap[8][12])
 
+
+##################this one could be missing check###############################
+#NodeMap[9][7]._adjacentNodes.append(NodeMap[10][7])
 #just in case
 NodeMap[3][31]._adjacentNodes.append(NodeMap[3][32])
+NodeMap[3][31]._adjacentNodes.append(NodeMap[2][31])
 
 
 
@@ -538,6 +548,8 @@ NodeMap[4][17]._adjacentNodes.append(NodeMap[5][17])
 NodeMap[18][11]._adjacentNodes.append(NodeMap[17][11])
 NodeMap[17][11]._adjacentNodes.append(NodeMap[16][11])
 NodeMap[16][11]._adjacentNodes.append(NodeMap[15][11])
+NodeMap[15][13]._adjacentNodes.append(NodeMap[14][13])
+NodeMap[0][17]._adjacentNodes.append(NodeMap[1][17])
 
 NodeMap[1][30]._adjacentNodes.append(NodeMap[2][30])
 NodeMap[2][30]._adjacentNodes.append(NodeMap[3][30])
@@ -570,6 +582,7 @@ NodeMap[10][4]._adjacentNodes.append(NodeMap[10][5])
 NodeMap[14][8]._adjacentNodes.append(NodeMap[13][8])
 NodeMap[11][8]._adjacentNodes.append(NodeMap[10][8])
 NodeMap[10][8]._adjacentNodes.append(NodeMap[10][9])
+NodeMap[10][8]._adjacentNodes.append(NodeMap[9][8])
 NodeMap[14][13]._adjacentNodes.append(NodeMap[13][13])
 NodeMap[13][13]._adjacentNodes.append(NodeMap[12][13])
 NodeMap[18][8]._adjacentNodes.append(NodeMap[17][8])
@@ -638,6 +651,9 @@ NodeMap[10][7]._adjacentNodes.append(NodeMap[11][7])
 NodeMap[9][3]._adjacentNodes.append(NodeMap[10][3])
 NodeMap[14][3]._adjacentNodes.append(NodeMap[14][2])
 NodeMap[14][2]._adjacentNodes.append(NodeMap[14][1])
+NodeMap[15][25]._adjacentNodes.append(NodeMap[14][25])
+NodeMap[15][31]._adjacentNodes.append(NodeMap[14][31])
+NodeMap[15][27]._adjacentNodes.append(NodeMap[14][27])
 
 
 #you can start fucking this up now joaquim
@@ -704,7 +720,7 @@ NodeMap[12][36]._adjacentNodes.append(NodeMap[12][35])
 NodeMap[9][35]._adjacentNodes.append(NodeMap[9][34])
 NodeMap[14][35]._adjacentNodes.append(NodeMap[14][34])
 NodeMap[2][35]._adjacentNodes.append(NodeMap[2][34])
-
+NodeMap[2][34]._adjacentNodes.append(NodeMap[3][34])
 for i in range(18,1,-1):
     NodeMap[i][35]._adjacentNodes.append(NodeMap[i-1][35])
     
