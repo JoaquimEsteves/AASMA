@@ -27,7 +27,7 @@ class Agent(object):
 class Car(Agent):
 
     def __init__(self,id, position,orientation=[1,0],destination=DEFAULT_DESTINATION):
-		#visual representation to be used in the map!
+        #visual representation to be used in the map!
         Agent.__init__(self,id,position,destination)
         self._visual = 'C'
         self._id = id
@@ -53,7 +53,7 @@ class Car(Agent):
     def setOrientation(self,oldNode,newNode):
         if self._speed == 0 or (oldNode._position == newNode._position) :
             return False
-        if newNode != [ oldNode[0] + self._orientation[0] , oldNode[1] + self._orientation[1]]
+        if newNode != [ oldNode[0] + self._orientation[0] , oldNode[1] + self._orientation[1]]:
             turn_left = [  - self._orientation [1] , self._orientation[0] ]
             turn_right = [ self._orientation [1] ,  - self._orientation[0] ]
             
@@ -62,7 +62,7 @@ class Car(Agent):
                 log.debug("I HAVE TURNED LEFT!")
                 self._orientation = turn_left
                 return TURN_SIG_LEFT
-            elif newNode = [ oldNode[0] + turn_right[0], oldNode[1] + turn_right[1]]:
+            elif newNode == [ oldNode[0] + turn_right[0], oldNode[1] + turn_right[1]]:
                 log.debug("I HAVE TURNED RIGHT!")
                 self._orientation = turn_right
                 return TURN_SIG_RIGHT
@@ -95,7 +95,8 @@ class Car(Agent):
         #So now for every node I'm going to drive through, I have to check if I'll crash into something!
         for i in self._plan[self._speed]:
             i._ocupiedBy.append(self)
-            if self.changedOrientation(previous_node,i)
+            if self.changedOrientation(previous_node,i):
+
             if i.checkForCrashNode():
                 self._crashed = True
                 log.info("I am a car and I've crashed at position {} {} !".format(self._position[0],self._position[1]))
