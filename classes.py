@@ -27,7 +27,7 @@ class Agent(object):
 class Car(Agent):
 
     def __init__(self,id, position,orientation=[1,0],destination=DEFAULT_DESTINATION):
-		#visual representation to be used in the map!
+        #visual representation to be used in the map!
         Agent.__init__(self,id,position,destination)
         self._visual = 'C'
         self._id = id
@@ -53,7 +53,7 @@ class Car(Agent):
     def setOrientation(self,oldNode,newNode):
         if self._speed == 0 or (oldNode._position == newNode._position) :
             return False
-        if newNode != [ oldNode[0] + self._orientation[0] , oldNode[1] + self._orientation[1]]
+        if newNode != [ oldNode[0] + self._orientation[0] , oldNode[1] + self._orientation[1]]:
             turn_left = [  - self._orientation [1] , self._orientation[0] ]
             turn_right = [ self._orientation [1] ,  - self._orientation[0] ]
             
@@ -62,7 +62,7 @@ class Car(Agent):
                 log.debug("I HAVE TURNED LEFT!")
                 self._orientation = turn_left
                 return TURN_SIG_LEFT
-            elif newNode = [ oldNode[0] + turn_right[0], oldNode[1] + turn_right[1]]:
+            elif newNode == [ oldNode[0] + turn_right[0], oldNode[1] + turn_right[1]]:
                 log.debug("I HAVE TURNED RIGHT!")
                 self._orientation = turn_right
                 return TURN_SIG_RIGHT
@@ -80,6 +80,26 @@ class Car(Agent):
     #road ahead?
     #if we want to make things harder check for people 2 or 3 nodes ahead
 
+    def dangerAhead(self):
+        #visible_zone = [[None for x in range(10)] for y in range(10)]
+        nearby_objects = []
+        for line in range(self.position[0] - 5, self.position[0] + 6):
+            for column in range(self.position[1] - 5, self.position[1] + 6):
+                if NodeMap[line][column] != None:
+                    nearby_objects += [NodeMap[line][column]]
+        my_orientation = self._orientation
+        for obj in nearby_objects:
+            obj_orientation = obj._orientation
+            obj_position = obj._position
+            obj_speed = obj._speed
+            other_positions = []
+            for v in range(obj_speed):
+                other_positions += [v*obj_orientation[0], v*obj_orientation[1]]
+            for other_pos in other_positions:
+                for my_pos in self._plan:
+                    if other_pos == my_pos:
+                        return True
+        return False
 
     #ACTUATORS
     def drive(self):
@@ -90,7 +110,7 @@ class Car(Agent):
         #So now for every node I'm going to drive through, I have to check if I'll crash into something!
         for i in self._plan[self._speed]:
             i._ocupiedBy.append(self)
-            if self.changedOrientation(previous_node,i)
+            self.setOrientation(previous_node,i):
             if i.checkForCrashNode():
                 self._crashed = True
                 log.info("I am a car and I've crashed at position {} {} !".format(self._position[0],self._position[1]))
@@ -106,11 +126,10 @@ class Car(Agent):
             self.hitTheBreaks(self)
     
     def hitTheBreaks(self):
-        new_orientation = [ - self.current_orientation[0] , - self.current_orientation[1] ] 
         self.speed = self.speed - 1
-        pos = self.drive(new_orientation)
-        #still doesnt existFIXME
-        self.crashed =  Node.checkForCrash(pos, self.worldmap)
+        pos = self.drive()
+        self.crashed =  getCurrent().checkForCrash()
+    
     def accelerate(self):
         self.speed = self.speed + 1
         self.drive()
