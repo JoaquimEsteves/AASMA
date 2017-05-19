@@ -85,6 +85,26 @@ class Car(Agent):
     #road ahead?
     #if we want to make things harder check for people 2 or 3 nodes ahead
 
+    def dangerAhead(self):
+        #visible_zone = [[None for x in range(10)] for y in range(10)]
+        nearby_objects = []
+        for line in range(self.position[0] - 5, self.position[0] + 6):
+            for column in range(self.position[1] - 5, self.position[1] + 6):
+                if NodeMap[line][column] != None:
+                    nearby_objects += [NodeMap[line][column]]
+        my_orientation = self._orientation
+        for obj in nearby_objects:
+            obj_orientation = obj._orientation
+            obj_position = obj._position
+            obj_speed = obj._speed
+            other_positions = []
+            for v in range(obj_speed):
+                other_positions += [v*obj_orientation[0], v*obj_orientation[1]]
+            for other_pos in other_positions:
+                for my_pos in self._plan:
+                    if other_pos == my_pos:
+                        return True
+        return False
 
     #ACTUATORS
     def drive(self):
