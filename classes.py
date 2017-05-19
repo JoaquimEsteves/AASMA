@@ -108,7 +108,7 @@ class Car(Agent):
         #So now for every node I'm going to drive through, I have to check if I'll crash into something!
         for i in self._plan[self._speed]:
             i._ocupiedBy.append(self)
-            self.setOrientation(previous_node,i):
+            self.setOrientation(previous_node,i)
             if i.checkForCrashNode():
                 self._crashed = True
                 log.info("I am a car and I've crashed at position {} {} !".format(self._position[0],self._position[1]))

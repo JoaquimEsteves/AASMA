@@ -136,7 +136,7 @@ def main():
     dijkstra_matrix()
 
 
-main()
+#main()
 
 
 
