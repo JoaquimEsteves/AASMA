@@ -70,11 +70,6 @@ class Car(Agent):
                 log.error("THIS PLAN IS TELLING ME TO GO BACKWARDS!")
                 raise OrientationError()
                 
-#MONSTERS
-
- #MONSTERS OVER
- 
- 
     def check_zebra(self):
         #how many nodes ahead
         if self.position == ZEBRA:

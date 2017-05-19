@@ -263,7 +263,38 @@ for i in range(4, 8):
 for i in range(12, 15):
     SimpleMap[4][i] = PEDESTRIAN_ZONE
 
+############################A MAP THAT'S JUST AN INTERSECTION####################    
+SimpleIntersection = [[ FREE for x in range(6)] for y in range(6)]
+for i in range(0,2):
+    SimpleIntersection[i][0] = WALL
+    SimpleIntersection[i][1] = WALL
+for i in range(4,6):
+    SimpleIntersection[i][0] = WALL
+    SimpleIntersection[i][1] = WALL
+for i in range(0,2):
+    SimpleIntersection[i][4] = WALL
+    SimpleIntersection[i][5] = WALL
+for i in range(4,6):
+    SimpleIntersection[i][4] = WALL
+    SimpleIntersection[i][5] = WALL
 
+SimpleIntersectionNode = [[None for x in range(6)] for y in range(6)]
+for y in range(0,6):
+    for x in range(0,6):
+        SimpleIntersectionNode[x][y] = Node( SimpleIntersection[x][y], [x,y], [])
+
+#adjacent Nodes!
+for i in range(0,5):
+    SimpleIntersectionNode[i][2]._ocupiedBy.append(SimpleIntersectionNode[i+1][2])
+for i range(5,1,-1):
+    SimpleIntersectionNode[i][3]._ocupiedBy.append(SimpleIntersectionNode[i-1][3])
+for i in range(0,5):
+    SimpleIntersectionNode[2][i]._ocupiedBy.append(SimpleIntersectionNode[2][i+1])
+for i range(5,1,-1):
+    SimpleIntersectionNode[3][i]._ocupiedBy.append(SimpleIntersectionNode[3][i-1])
+
+PossibleDestinations = [SimpleIntersectionNode[2][0], SimpleIntersectionNode[0][3], SimpleIntersectionNode[3][5], SimpleIntersectionNode[5][2]] 
+    
 # # # Declaration of Map # # #
 MAP = SimpleMap
 
@@ -289,7 +320,7 @@ for i in range(0,19):
 for i in range(18,1,-1):
     NodeMap[i][1]._adjacentNodes.append(NodeMap[i-1][1])
 
-#joaquim dont fuck me up fam
+
 #top
 for i in range(2, 9): #could be 2-8
     NodeMap[1][i]._adjacentNodes.append(NodeMap[1][i+1])
@@ -662,8 +693,8 @@ for e in NodeMap:
         if c._adjacentNodes == []:
             c._type='n'
 
-def printMap(): 
-    for e in NodeMap:
+def printMap(map = NodeMap): 
+    for e in map:
         a = ""
         for c in e:
             if c._ocupiedBy != []:
@@ -672,8 +703,7 @@ def printMap():
                 a += ' ' + c._type
         print a
 
-#printMap()
-
+        
 def printMapMatrix():
     a = "   "
     b = ""
