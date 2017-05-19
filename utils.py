@@ -1,6 +1,7 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
 from Maps import *
+from classes import *
 from collections import defaultdict, deque
     #graph and djisktra algorithm
     #defaultdict in contrast will simply create any items that you try to access
@@ -91,12 +92,18 @@ graph.add_edge('F', 'G', 2)
 
 
 ########################################djisktra with matrixes we'll see#############
-def dijkstra_matrix(matrix, m, n):
-    k = int(input("Enter the source vertex"))
+def dijkstra_matrix():
+    #k = int(input("Enter the source vertex"))
+    k = Car.getCurrentNode()
+    matrix = NodeMap
+    m = len(matrix)
+    n = len(matrix[0])
     cost = [[0 for x in range(m)] for x in range(1)]
     offsets = []
     offsets.append(k)
     elepos = 0
+
+
     for j in range(m):
         cost[0][j] = matrix[k][j]
     mini = 999
@@ -116,15 +123,17 @@ def dijkstra_matrix(matrix, m, n):
 
 def main():
     print("Dijkstras algorithum graph using matrix representation \n")
-    n = int(input("number of elements in row"))
-    m = int(input("number of elements in column"))
+    #n = int(input("number of elements in row"))
+    #m = int(input("number of elements in column"))
     # print("enter the values of the matrix")
-    matrix = [[0 for x in range(m)] for x in range(n)]
-    for i in range(n):
-        for j in range(m):
-            matrix[i][j] = int(input("enter the values of the matrix"))
-    print(matrix)
-    dijkstra_matrix(matrix, n, m)
+    #matrix = [[0 for x in range(m)] for x in range(n)]
+    #matrix = NodeMap
+    #for i in range(n):
+        #for j in range(m):
+
+            #matrix[i][j] = int(input("enter the values of the matrix"))
+    #print(matrix)
+    dijkstra_matrix()
 
 
 main()
