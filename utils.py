@@ -29,11 +29,11 @@ for lines in range(len(NodeMap)):
     for columns in range(len(NodeMap[0])):
         if NodeMap[lines][columns] not in g.nodes:
             g.add_node(NodeMap[lines][columns])
-            for node in NodeMap[lines][columns]._adjacentNodes:
-                if node not in g.nodes:
-                    g.add_node(node)
-                else:
-                    g.add_edge(NodeMap[lines][columns],node, node._carHeuristic)
+            #print "added {}".format(NodeMap[lines][columns])
+        for node in NodeMap[lines][columns]._adjacentNodes:
+            if node not in g.nodes:
+                g.add_node(node)
+            g.add_edge(NodeMap[lines][columns],node, node._carHeuristic)
 
 CAR_GRAPH = g
 
@@ -117,24 +117,36 @@ def dijsktra(graph, start_node):
             if edge not in visited or weight < visited[edge]:
                 visited[edge] = weight
                 path[edge] = min_node
-
+    print "thefucking path {}".format(path.values())
     return visited, path
 
     #final_node -> FINAL_DESTINATION in settings
 
 
 def shortest_path(graph, start_node, final_node):
+    print 1
     visited, path = dijsktra(graph, start_node)
+    print 2
     complete_path = deque()
-    destination = path[final_node]
-    while destination != start_node:
-        complete_path.appendleft(destination)
-        destination = path[destination]
-
+    print "here comes the complete path {}".format(complete_path)
+    print "here comes the path {}".format(path.values())
+    print "here comes the path {}".format(path.keys())
+    _destination = path[final_node]
+    #_destination._position
+    while _destination != start_node:
+        complete_path.appendleft(_destination)
+        print 4
+        _destination = path[_destination]
+        print 6
+    print 7
     complete_path.appendleft(start_node)
+    print 8
     complete_path.append(final_node)
-
-    return list(complete_path)
+    print 9
+    positions = []
+    for i in complete_path:
+        print "I'm scared {}".format(i._position)
+    return complete_path
 
 
 #testcode

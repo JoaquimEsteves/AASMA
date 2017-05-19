@@ -38,7 +38,7 @@ class Node(object):
     ZEBRA = 'Z'
     PEDESTRIAN_ZONE = '0'
 
-    def __es__(self,other):
+    def __eq__(self,other):
         return other._position == self._position
 
     def removeFromOcupied(self,agent):
@@ -330,7 +330,7 @@ NodeMap = [[None for x in range(40)] for y in range(20)]
 for y in range(0,40):
     for x in range(0,20):
         #print "x: {} y: {}".format(x,y)
-        NodeMap[x][y] = Node( MAP[x][y] ,[x,y], [])   
+        NodeMap[x][y] = Node( MAP[x][y] ,(x,y), [])
 
 
 ### DEFINING ADJACENT NODES FOR NODE MAP
@@ -360,7 +360,7 @@ for i in range(30, 34):
 for i in range(31, 12, -1):
     NodeMap[0][i]._adjacentNodes.append(NodeMap[0][i-1])
 
-for i in range(10, -1, -1):
+for i in range(10, 0, -1):
     NodeMap[0][i]._adjacentNodes.append(NodeMap[0][i-1])
 
 for i in range(39, 33, -1):
