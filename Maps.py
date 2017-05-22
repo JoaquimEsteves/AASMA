@@ -43,7 +43,12 @@ class Node(object):
 
     def removeFromOcupied(self,agent):
         if agent in self._ocupiedBy:
-            self._ocupiedBy.remove(agent)
+            # print "OIOIOI I SHOULD BE REMOOOOOOVED"
+            _ocupiedByAux = self._ocupiedBy  
+            _ocupiedByAux.remove(agent)
+            # print agent in _ocupiedByAux
+            self._ocupiedBy = _ocupiedByAux
+            # print agent in self._ocupiedBy
     
     def checkForCrashNode(self):
         """Counts the number of non Null elements in the attribute ocupiedBy, if it's bigger than 1, returns true."""
@@ -736,10 +741,10 @@ for i in range(18,1,-1):
 for i in range(3,18):
     NodeMap[i][34]._adjacentNodes.append(NodeMap[i+1][34])
 
-for e in NodeMap:
-    for c in e:
-        if c._adjacentNodes == []:
-            c._type='n'
+# for e in NodeMap:
+    # for c in e:
+        # if c._adjacentNodes == []:
+            # c._type='n'
 
 def printMap(map = NodeMap): 
     for e in map:

@@ -8,9 +8,9 @@ from Maps import *
 #log = Logger(debug=settings.DEBUG)
 
 class Agent(object):
-    def __init__(self,id,position,orientation=[1,0],destination=DEFAULT_DESTINATION):
+    def __init__(self,id,position,orientation=[1,0],destination=DEFAULT_DESTINATION,map=NodeMap):
         self._id = id
-        self._worldmap = WORLDMAP
+        self._worldmap = map
         #position: Position of the car - ie: the patch it's on
         self.position = position
         #destination: Describes the patch the agent wants to go to
@@ -44,7 +44,8 @@ class Car(Agent):
         self._crashed = False
         #dijsktra
         self._plan = self.planAhead()
-
+        for i in self._plan:
+            print i._position
     #Sensors   
     #FIX ME
     #zebra ahead?
@@ -56,24 +57,30 @@ class Car(Agent):
     #Check if I changed orientation!
     def setOrientation(self,oldNode,newNode):
         """check if I'm going to have to change orientation to go from the old node to the new one!"""
-        if self._speed == 0 or (oldNode.position == newNode.position) :
+        if self._speed == 0 or (oldNode._position == newNode._position) :
             return False
-        if newNode != [ oldNode[0] + self._orientation[0] , oldNode[1] + self._orientation[1]]:
+        if newNode._position != ( oldNode._position[0] + self._orientation[0] , oldNode._position[1] + self._orientation[1]):
             turn_left = [  - self._orientation [1] , self._orientation[0] ]
             turn_right = [ self._orientation [1] ,  - self._orientation[0] ]
             
             #log.debug("I HAVE TO CHANGE MY ORIENTATION!")
             
-            if newNode == [ oldNode[0] + turn_left[0], oldNode[1] + turn_left[1]]:
+            if newNode._position == ( oldNode._position[0] + turn_left[0], oldNode._position[1] + turn_left[1]):
                 #log.debug("I HAVE TURNED LEFT!")
                 self._orientation = turn_left
                 return TURN_SIG_LEFT
-            elif newNode == [ oldNode[0] + turn_right[0], oldNode[1] + turn_right[1]]:
+            elif newNode._position == ( oldNode._position[0] + turn_right[0], oldNode._position[1] + turn_right[1]):
                 #log.debug("I HAVE TURNED RIGHT!")
                 self._orientation = turn_right
                 return TURN_SIG_RIGHT
             else:
                 #log.error("THIS PLAN IS TELLING ME TO GO BACKWARDS!")
+                print "THIS PLAN IS TELLING ME TO GO BACKWARDS!"
+                print newNode._position
+                print oldNode._position
+                print self._orientation
+                print turn_right
+                print turn_left
                 raise OrientationError()
                 
     def dangerAhead(self):
@@ -83,8 +90,8 @@ class Car(Agent):
         
         for line in range(max(self.position[0] - 5,0), min(self.position[0] + 6,19)): 
             for column in range(max(self.position[1] - 5,0), min(self.position[1] + 6,39)):
-                if NodeMap[line][column]._ocupiedBy != []:
-                    nearby_objects += [NodeMap[line][column]._ocupiedBy[0]]
+                if self._worldmap[line][column]._ocupiedBy != []:
+                    nearby_objects += [self._worldmap[line][column]._ocupiedBy[0]]
         my_orientation = self._orientation
         for obj in nearby_objects:
             obj_orientation = obj._orientation
@@ -95,7 +102,7 @@ class Car(Agent):
                 other_positions += [(v+1)*obj_orientation[0], (v+1)*obj_orientation[1]]
             for other_pos in other_positions:
                 for my_pos in self._plan:
-                    if other_pos == my_pos:
+                    if other_pos == my_pos._position:
                         return True
         return False
 
@@ -107,24 +114,27 @@ class Car(Agent):
         if self.position == self.destination:
             print "I HAVE REACHER MY DESTINATION! {}".format(self.position)
             self._reachedDestination = True
-        final_node = self._plan[1]
-        previous_node = self.getCurrentNode()
-        self.getCurrentNode().removeFromOcupied(self)
-        #So now for every node I'm going to drive through, I have to check if I'll crash into something!
-        
-        #remove this node form the plan since i'm going to drive away from it!
-        self._plan = self._plan[1:]
-        
-        self._plan[0]._ocupiedBy.append(self)
-        self.setOrientation(previous_node,self._plan[0])
-        if self._plan[0].checkForCrashNode():
-            self.crashed = True
-            print "I HAVE CRASHED!"
-            #log.info("I am a car and I've crashed at position {} {} !".format(self.position[0],self.position[1]))
+        if self._speed != 0 and len(self._plan) > 1:
+            final_node = self._plan[1]
+            previous_node = self.getCurrentNode()
+            self.getCurrentNode().removeFromOcupied(self)
+            #So now for every node I'm going to drive through, I have to check if I'll crash into something!
+            
+            #remove this node form the plan since i'm going to drive away from it!
+            
+            
+            self._plan = self._plan[1:]
+            
+            self._plan[0]._ocupiedBy.append(self)
+            self.setOrientation(previous_node,self._plan[0])
+            if self._plan[0].checkForCrashNode():
+                self.crashed = True
+                print "I HAVE CRASHED!"
+                #log.info("I am a car and I've crashed at position {} {} !".format(self.position[0],self.position[1]))
 
-        self.position = final_node.position
-        addSelfToNewNode(self.position[0],self.position[1])
-        return self.position
+            self.position = final_node._position
+            self.addSelfToNewNode(self.position[0],self.position[1])
+            return self.position
     
     def move(self):
         """Overriding super class method"""
@@ -141,7 +151,7 @@ class Car(Agent):
         #self.crashed =  self.getCurrentNode().checkForCrash()
     
     def accelerate(self):
-        self.speed = self.speed + 1
+        self._speed = self._speed + 1
         #self.drive()
     
     # def executeNextAction(self,nextAction):
@@ -161,7 +171,8 @@ class Car(Agent):
     #planning
     def planAhead(self):
         """applies disjktras algorithm"""
-        return shortest_path(CAR_GRAPH, self._worldmap[self.position[0]]self.position[1], self.destination)
+        #hashable_position =
+        return shortest_path(CAR_GRAPH, self._worldmap[self.position[0]][self.position[1]],  self._worldmap[self.destination[0]][self.destination[1]])
     
     #actiave turn signals, or not!
     def checkForTurns(self):
@@ -169,17 +180,20 @@ class Car(Agent):
             how soon depends on it's speed!
         """
         currentNode = self.getCurrentNode()
-        for nextNode in self._plan[self._speed]:
-            if self.setOrientation(currentNode, nextNode):
-                self._turn_signal_status = self.setOrientation(currentNode, nextNode)
-                return
-        self._turn_signal_status = TURN_SIG_OFF
-                
+        try: 
+            for nextNode in self._plan[:self._speed]:
+                if self.setOrientation(currentNode, nextNode):
+                    self._turn_signal_status = self.setOrientation(currentNode, nextNode)
+                    return
+            self._turn_signal_status = TURN_SIG_OFF
+        except:
+            #only happens if speed is 0
+            pass
     
     #run cycle
-    def run(self,MAP):
+    def run(self):
         """The run function determines whether the car will simply drive, accelerate or brake!"""
-        if self.crashed == True:
+        if self._crashed == True:
             print "I HAVE CRASHED! THIS IS TERRIBLE!"
             return
         if self.position == self.destination:

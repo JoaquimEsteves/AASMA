@@ -95,9 +95,9 @@ PERSON_GRAPH = gp
 
 
 def dijsktra(graph, start_node):
-    print "1 - disjktra"
+    # print "1 - disjktra"
     visited = {start_node: 0}
-    print "2 - disjktra"
+    # print "2 - disjktra"
     path = {}
     nodes = set(graph.nodes)
     while nodes:
@@ -120,36 +120,35 @@ def dijsktra(graph, start_node):
             if edge not in visited or weight < visited[edge]:
                 visited[edge] = weight
                 path[edge] = min_node
-    print "thefucking path {}".format(path.values())
     return visited, path
 
     #final_node -> FINAL_DESTINATION in settings
 
 
 def shortest_path(graph, start_node, final_node):
-    print 1
+    # print 1
     visited, path = dijsktra(graph, start_node)
-    print 2
+    # print 2
     complete_path = deque()
-    print "here comes the complete path {}".format(complete_path)
-    print "here comes the path {}".format(path.values())
-    print "here comes the path {}".format(path.keys())
+    # print "here comes the complete path {}".format(complete_path)
+    # print "here comes the path {}".format(path.values())
+    # print "here comes the path {}".format(path.keys())
     _destination = path[final_node]
     #_destination._position
     while _destination != start_node:
         complete_path.appendleft(_destination)
-        print 4
+        # print 4
         _destination = path[_destination]
-        print 6
-    print 7
+        # print 6
+    # print 7
     complete_path.appendleft(start_node)
-    print 8
+    # print 8
     complete_path.append(final_node)
-    print 9
+    # print 9
     positions = []
-    for i in complete_path:
-        print "I'm scared {}".format(i._position)
-    return complete_path
+    # for i in complete_path:
+        # print "I'm scared {}".format(i._position)
+    return list(complete_path)
 
 
 #Auxiliary

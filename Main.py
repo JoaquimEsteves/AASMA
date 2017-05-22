@@ -11,7 +11,7 @@ def moveAgents(listAgents,worldmap = NodeMap):
     for agent in listAgents:
         move_cycles_list += [agent.run()]
     while move_cycles_list != []:
-        for agnt in move_cycles_list:
+        for agnt in move_cycles_list[:]:
             if agnt[1] < 0:
                 raise NegativeSpeedError()
             if agnt[1] == 0:
@@ -31,8 +31,13 @@ def moveAgents(listAgents,worldmap = NodeMap):
 
 if __name__ == "__main__":
     mainMap = NodeMap
-    car = Car(1,[0,19])
+    car = Car(1,[0,19],[-1,0])
+    car2 = Car(2,[0,0])
+    car2._visual = '2'
     AgentList = []
     AgentList.append(car)
+    AgentList.append(car2)
     while AgentList != []:
+        printMap()
         moveAgents(AgentList,mainMap)
+        s = raw_input('continue!')
